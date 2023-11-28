@@ -1,5 +1,5 @@
 {
-  "name": "commt-rn-sdk",
+  "name": "@commt/commt-rn-sdk",
   "version": "0.0.1",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.tsx",
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/commt/commt-rn.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "dayjs": "^1.11.9",
     "axios": "^1.4.0",
     "node-forge": "^1.3.1",
@@ -22,21 +22,29 @@
     "react-native-svg": "^13.10.0",
     "react-native-gifted-chat": "^2.4.0"
   },
-  "devDependencies": {
-    "typescript": "4.8.4",
-    "@types/node-forge": "^1.3.9",
-    "@types/react": "^18.0.24",
-    "@tsconfig/react-native": "^2.0.2"
+  "keywords": [
+    "commt",
+    "react-native-chat-sdk",
+    "react-native-chat-plugin",
+    "commt-chat-sdk",
+    "dayjs",
+    "node-forge",
+    "styled-components",
+    "socket-io",
+    "react-native-gifted-chat",
+    "custom-chat-plugin"
+  ],
+  "contributors": [
+    "Mesut KILINCASLAN",
+    "Sedanur AKÇİL"
+  ],
+  "publishConfig": {
+    "registry":"https://github.com/commt/commt-rn.git"
   },
-  "keywords": ["commt", "react-native-chat-sdk", "react-native-chat-plugin", "commt-chat-sdk", "dayjs", "node-forge", "styled-components", "socket-io", "react-native-gifted-chat", "custom-chat-plugin"],
-  "contributors": [{
-    "name": "Mesut KILINCASLAN"
-  }, {
-    "name": "Sedanur AKÇİL"
-  }],
   "bugs": {
     "url": "https://github.com/commt/commt-rn.git/issues"
   },
   "homepage": "https://github.com/commt/commt-rn.git#readme",
-  "license": "ISC"
+  "license": "MIT",
+  "author": "Mesut KILINCASLAN"
 }
