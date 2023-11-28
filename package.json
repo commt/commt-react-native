@@ -29,7 +29,11 @@
     "@tsconfig/react-native": "^2.0.2"
   },
   "keywords": ["commt", "react-native-chat-sdk", "react-native-chat-plugin", "commt-chat-sdk", "dayjs", "node-forge", "styled-components", "socket-io", "react-native-gifted-chat", "custom-chat-plugin"],
-  "contributors": ["Mesut KILINCASLAN", "Sedanur AKÇİL"],
+  "contributors": [{
+    "name": "Mesut KILINCASLAN"
+  }, {
+    "name": "Sedanur AKÇİL"
+  }],
   "bugs": {
     "url": "https://github.com/commt/commt-rn.git/issues"
   },
