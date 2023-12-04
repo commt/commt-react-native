@@ -1,4 +1,4 @@
-import { InitiateProps, initiate } from "../Services";
+import { InitiateProps, initiate } from "../service";
 
 import { useCallback, useContext, useEffect, useState } from "react";
 import { CommtContext } from "../context/Context";

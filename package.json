@@ -1,6 +1,6 @@
 {
   "name": "@commt/commt-rn-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.tsx",
   "scripts": {
@@ -30,15 +30,15 @@
   },
   "keywords": [
     "commt",
-    "react-native-chat-sdk",
-    "react-native-chat-plugin",
     "commt-chat-sdk",
-    "dayjs",
-    "node-forge",
-    "styled-components",
-    "socket-io",
-    "react-native-gifted-chat",
-    "custom-chat-plugin"
+    "chat",
+    "react-native",
+    "react",
+    "message",
+    "messenger",
+    "custom-chat-plugin",
+    "react-native-chat-sdk",
+    "react-native-chat-plugin"
   ],
   "contributors": [
     {"name": "Mesut KILINCASLAN"},
@@ -47,7 +47,7 @@
   "bugs": {
     "url": "https://github.com/commt/commt-rn.git/issues"
   },
-  "homepage": "https://github.com/commt/commt-rn.git#readme",
+  "homepage": "https://commt.co/doc",
   "license": "MIT",
   "author": "Mesut KILINCASLAN"
 }
