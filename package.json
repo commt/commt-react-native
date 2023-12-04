@@ -30,15 +30,15 @@
   },
   "keywords": [
     "commt",
-    "react-native-chat-sdk",
-    "react-native-chat-plugin",
     "commt-chat-sdk",
-    "dayjs",
-    "node-forge",
-    "styled-components",
-    "socket-io",
-    "react-native-gifted-chat",
-    "custom-chat-plugin"
+    "chat",
+    "react-native",
+    "react",
+    "message",
+    "messenger",
+    "custom-chat-plugin",
+    "react-native-chat-sdk",
+    "react-native-chat-plugin"
   ],
   "contributors": [
     {"name": "Mesut KILINCASLAN"},
