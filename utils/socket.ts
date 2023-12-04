@@ -2,7 +2,6 @@ import { ICustomMessage } from "../context/reducers/messagesReducer";
 import { Socket, io } from "socket.io-client";
 import * as types from "./emitTypes";
 import { RoomProps } from "../context/reducers/roomsReducer";
-import PackageJson from "../package.json";
 
 export type MessageInfoProps = {
   message: ICustomMessage;
@@ -75,15 +74,10 @@ interface ConnectProps {
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-const project = {
-  name: "React Native SDK",
-  version: PackageJson.version,
-};
-
 export const connect = (props: ConnectProps) => {
   const { chatAuthId, tenantId, auth } = props;
   socket = io("https://service.commt.co", {
-    query: { chatAuthId, tenantId, project },
+    query: { chatAuthId, tenantId },
     auth,
   });
 };
