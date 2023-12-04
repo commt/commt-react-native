@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { CommtContext } from "../context/Context";
 import { setRooms } from "../context/actions/roomsActions";
 import { RoomProps } from "../context/reducers/roomsReducer";
-import { getRoomsReadToken } from "../Services";
+import { getRoomsReadToken } from "../service";
 import { IndicatorProps } from "../context/reducers/appReducer";
 
 const useSetRooms = () => {

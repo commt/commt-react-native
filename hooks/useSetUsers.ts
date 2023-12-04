@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { CommtContext } from "../context/Context";
 import { setUsers } from "../context/actions/usersActions";
 import { UserProps } from "../context/reducers/usersReducer";
-import { getUsersOnlineInfo } from "../Services";
+import { getUsersOnlineInfo } from "../service";
 import { IndicatorProps } from "../context/reducers/appReducer";
 
 const useSetUsers = () => {

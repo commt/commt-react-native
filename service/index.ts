@@ -2,6 +2,7 @@ import { UserProps } from "../context/reducers/usersReducer";
 import axios from "./Axios";
 import { ConfigsProps } from "../context/reducers/appReducer";
 import { RoomProps } from "../context/reducers/roomsReducer";
+import PackageJson from "../package.json";
 
 interface AuthKeysProps {
   apiKey: string;
@@ -30,6 +31,11 @@ type ReadTokenReturnProps = Pick<
   "chatRoomAuthId" | "lastMessageReadToken"
 >;
 
+const project = {
+  name: "React Native SDK",
+  version: PackageJson.version,
+};
+
 export const initiate = async (props: InitiateProps) => {
   const { tenantId, apiKey, subscriptionKey } = props;
 
@@ -40,6 +46,8 @@ export const initiate = async (props: InitiateProps) => {
         params: {
           tenantId,
           plugin: true, // This is for backend compatibility
+          project: project.name, // This is for backend compatibility & analytics
+          version: project.version, // This is for backend compatibility & analytics
         },
         headers: {
           apiKey,
