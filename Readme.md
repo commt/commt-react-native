@@ -28,7 +28,7 @@ Welcome to Commt, a powerful chat plugin designed to seamlessly integrate secure
 - NPM: `npm i -S @commt/commt-rn-sdk`
 - Yarn: `yarn add @commt/commt-rn-sdk`
 
-For detailed installation instructions and configuration options, please refer to our [documentation](https://commt.co/doc).
+For detailed installation instructions and configuration options, please refer to our [documentation](https://commt.co/doc/react-native#installation).
 
 ## Usage
 
@@ -38,7 +38,7 @@ Get started with Commt in just a few steps:
 - Customize UI: Tailor the UI elements to match your app's aesthetics. Trigger the `useTheme` hook by passing theme values and make the components custom.
 - Implement Secure Chat: Utilize the secure and encrypted chat functionalities.
 
-Check out our [documentation](https://commt.co/doc) for comprehensive usage examples and API reference.
+Check out our [documentation](https://commt.co/doc/react-native#introduction) for comprehensive usage examples and API reference.
 
 ## Example
 
