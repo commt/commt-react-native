@@ -1,8 +1,8 @@
-# COMMT: Secure Chat Plugin for React Native
+# COMMT: Chat Plugin for React Native
 
-![npm](https://img.shields.io/npm/dw/%40commt%2Fcommt-rn-sdk)
-![npm](https://img.shields.io/npm/v/%40commt%2Fcommt-rn-sdk)
-![NPM](https://img.shields.io/npm/l/%40commt%2Fcommt-rn-sdk?color=blue)
+![npm](https://img.shields.io/npm/dw/%40commt%2Frn-sdk)
+![npm](https://img.shields.io/npm/v/%40commt%2Frn-sdk)
+![NPM](https://img.shields.io/npm/l/%40commt%2Frn-sdk?color=blue)
 
 
 <p align="center">
@@ -10,7 +10,7 @@
 </p>
 <br />
 
-Welcome to Commt, a powerful chat plugin designed to seamlessly integrate secure and customizable chat functionalities into your React Native applications. Offering AES encryption as the default and end-to-end (E2E) support, Commt ensures a secure and reliable communication experience for your users.
+Welcome to Commt, a powerful chat plugin designed to seamlessly integrate secure and customizable chat functionalities into your React Native applications. Offering AES encryption as the default and end-to-end (E2E) support, Commt ensures a secure and reliable real-time communication experience for your users.
 
 ## Features
 - Written in **TypeScript**
@@ -25,8 +25,8 @@ Welcome to Commt, a powerful chat plugin designed to seamlessly integrate secure
 
 ## Installation
 
-- NPM: `npm i -S @commt/commt-rn-sdk`
-- Yarn: `yarn add @commt/commt-rn-sdk`
+- NPM: `npm i -S @commt/rn-sdk`
+- Yarn: `yarn add @commt/rn-sdk`
 
 For detailed installation instructions and configuration options, please refer to our [documentation](https://commt.co/doc/react-native#installation).
 
@@ -46,8 +46,8 @@ You can get client configs info from [Commt Dashboard](https://dashboard.commt.c
 
 **App.tsx**
 ```
-import CommtProvider from "@commt/commt-rn-sdk";
-import useInitiate from "@commt/commt-rn-sdk/hooks/useInitiate";
+import CommtProvider from "@commt/rn-sdk";
+import { useInitiate } from "@commt/rn-sdk/hooks";
 
 const ClientConfig = {
   apiKey: "123456789?",
@@ -69,7 +69,7 @@ function App(): JSX.Element {
 
 **Home.tsx**
 ```
-import { useSetMessages, useSetRooms, useSetUsers } from "@commt/commt-rn-sdk/hooks";
+import { useSetMessages, useSetRooms, useSetUsers } from "@commt/rn-sdk/hooks";
 
 const Home = () => {
   // ...
@@ -100,7 +100,7 @@ import {
   MessageList,
   SearchInput,
   MessagesHeader
-} from "@commt/commt-rn-sdk/components";
+} from "@commt/rn-sdk/components";
 
 const Messages = () => {
   // ...
@@ -123,7 +123,7 @@ const Messages = () => {
 
 **Chat.tsx**
 ```
-import { ChatHeader, Chat } from "@commt/commt-rn-sdk/components";
+import { ChatHeader, Chat } from "@commt/rn-sdk/components";
 
 const Chats = () => {
   const route = useRoute<RouteProp<RootStackParamList, "Chats">>();
