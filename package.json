@@ -1,5 +1,5 @@
 {
-  "name": "@commt/commt-rn-sdk",
+  "name": "@commt/rn-sdk",
   "version": "0.0.2",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.tsx",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commt/commt-rn.git"
+    "url": "git+https://github.com/commt/rn-sdk.git"
   },
   "dependencies": {
     "dayjs": "^1.11.9",
@@ -36,6 +36,7 @@
     "react",
     "message",
     "messenger",
+    "commt-react-native",
     "custom-chat-plugin",
     "react-native-chat-sdk",
     "react-native-chat-plugin"
@@ -45,7 +46,7 @@
     {"name": "Sedanur AKÇİL"}
   ],
   "bugs": {
-    "url": "https://github.com/commt/commt-rn.git/issues"
+    "url": "https://github.com/commt/rn-sdk.git/issues"
   },
   "homepage": "https://commt.co/doc",
   "license": "MIT",
