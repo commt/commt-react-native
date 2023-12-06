@@ -52,8 +52,7 @@ import { useInitiate } from "@commt/rn-sdk/hooks";
 const ClientConfig = {
   apiKey: "123456789?",
   subscriptionKey: "0987654321?",
-  tenantId: "AD768342asdf?9892",
-  secret: "123456789018A_7JzPo?23F+4y#erPL"
+  secret: "123456789018A_7JzPo?23F+4y#erPL" // This is just and example you don't have to add secret here for initialization
 };
 
 function App(): JSX.Element {
