@@ -37,26 +37,22 @@ const project = {
 };
 
 export const initiate = async (props: InitiateProps) => {
-  const { tenantId, apiKey, subscriptionKey } = props;
+  const { apiKey, subscriptionKey } = props;
 
   try {
-    const response = await axios.get<ConfigsProps>(
-      `/api/v1/tenant/config/${tenantId}`,
-      {
-        params: {
-          tenantId,
-          plugin: true, // This is for backend compatibility
-          project: project.name, // This is for backend compatibility & analytics
-          version: project.version, // This is for backend compatibility & analytics
-        },
-        headers: {
-          apiKey,
-          subscriptionKey,
-        },
+    const response = await axios.get<ConfigsProps>(`/api/v1/tenant/config/`, {
+      params: {
+        plugin: true, // This is for backend compatibility
+        project: project.name, // This is for backend compatibility & analytics
+        version: project.version, // This is for backend compatibility & analytics
       },
-    );
+      headers: {
+        apiKey,
+        subscriptionKey,
+      },
+    });
 
-    if (response.data.tenantId === tenantId) {
+    if (response.data.tenantId) {
       return response.data;
     }
 
