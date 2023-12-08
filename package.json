@@ -1,6 +1,6 @@
 {
   "name": "@commt/rn-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.tsx",
   "scripts": {
@@ -42,8 +42,12 @@
     "react-native-chat-plugin"
   ],
   "contributors": [
-    {"name": "Mesut KILINCASLAN"},
-    {"name": "Sedanur AKÇİL"}
+    {
+      "name": "Mesut KILINCASLAN"
+    },
+    {
+      "name": "Sedanur AKÇİL"
+    }
   ],
   "bugs": {
     "url": "https://github.com/commt/rn-sdk.git/issues"
