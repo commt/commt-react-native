@@ -79,7 +79,7 @@ const MessageList = ({ onPress }: MessageListProps) => {
       return room.groupName.toLowerCase();
     } else {
       const oppositeUserId = room.participants.find(
-        (id) => id !== selfUser?._id,
+        (id) => id !== selfUser?._id && !id.startsWith("system"),
       );
       return (
         users
