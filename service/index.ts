@@ -4,16 +4,12 @@ import { ConfigsProps } from "../context/reducers/appReducer";
 import { RoomProps } from "../context/reducers/roomsReducer";
 import PackageJson from "../package.json";
 
-interface AuthKeysProps {
+export interface InitiateProps {
   apiKey: string;
   subscriptionKey: string;
 }
 
-export interface InitiateProps extends AuthKeysProps {
-  tenantId: string;
-}
-
-interface OnlineInfoProps extends AuthKeysProps {
+interface OnlineInfoProps extends InitiateProps {
   userIds: string;
 }
 
@@ -22,7 +18,7 @@ type OnlineInfoReturnProps = Pick<
   "chatAuthId" | "socketId" | "online"
 >;
 
-interface ReadTokenProps extends AuthKeysProps {
+interface ReadTokenProps extends InitiateProps {
   roomIds: string;
 }
 
@@ -103,7 +99,6 @@ export const getRoomsReadToken = async (props: ReadTokenProps) => {
         },
       },
     );
-
     return response.data;
   } catch {
     // TODO: Log error
