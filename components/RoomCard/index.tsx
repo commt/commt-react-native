@@ -120,7 +120,9 @@ const RoomCard = ({ room, onClickAction }: RoomCardProps) => {
 
   const oppositeUserId = room.groupName
     ? null
-    : room.participants.find((id) => id !== selfUser?._id);
+    : room.participants.find(
+        (id) => id !== selfUser?._id && !id.startsWith("system"),
+      );
   const oppositeUser = oppositeUserId
     ? users.find((user: UserProps) => user._id === oppositeUserId)
     : null;
