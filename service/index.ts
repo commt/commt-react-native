@@ -4,12 +4,16 @@ import { ConfigsProps } from "../context/reducers/appReducer";
 import { RoomProps } from "../context/reducers/roomsReducer";
 import PackageJson from "../package.json";
 
-export interface InitiateProps {
+interface AuthKeyProps {
   apiKey: string;
   subscriptionKey: string;
 }
 
-interface OnlineInfoProps extends InitiateProps {
+export interface InitiateProps extends AuthKeyProps {
+  projectName: string;
+}
+
+interface OnlineInfoProps extends AuthKeyProps {
   userIds: string;
 }
 
@@ -18,7 +22,7 @@ type OnlineInfoReturnProps = Pick<
   "chatAuthId" | "socketId" | "online"
 >;
 
-interface ReadTokenProps extends InitiateProps {
+interface ReadTokenProps extends AuthKeyProps {
   roomIds: string;
 }
 
@@ -33,7 +37,7 @@ const project = {
 };
 
 export const initiate = async (props: InitiateProps) => {
-  const { apiKey, subscriptionKey } = props;
+  const { apiKey, subscriptionKey, projectName } = props;
 
   try {
     const response = await axios.get<ConfigsProps>(`/api/v1/tenant/config/`, {
