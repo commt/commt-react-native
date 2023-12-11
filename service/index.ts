@@ -32,7 +32,7 @@ type ReadTokenReturnProps = Pick<
 >;
 
 const project = {
-  name: "React Native SDK",
+  SDK: "React Native SDK",
   version: PackageJson.version,
 };
 
@@ -43,8 +43,9 @@ export const initiate = async (props: InitiateProps) => {
     const response = await axios.get<ConfigsProps>(`/api/v1/tenant/config/`, {
       params: {
         plugin: true, // This is for backend compatibility
-        project: project.name, // This is for backend compatibility & analytics
+        SDK: project.SDK, // This is for backend compatibility & analytics
         version: project.version, // This is for backend compatibility & analytics
+        name: projectName, // This is for backend compatibility & analytics
       },
       headers: {
         apiKey,
