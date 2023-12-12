@@ -2,11 +2,13 @@ import { UserProps } from "../context/reducers/usersReducer";
 import axios from "./Axios";
 import { ConfigsProps } from "../context/reducers/appReducer";
 import { RoomProps } from "../context/reducers/roomsReducer";
-import PackageJson from "../package.json";
+import PackageJson from "../../package.json";
+import * as events from "../utils/events";
 
 interface AuthKeyProps {
   apiKey: string;
   subscriptionKey: string;
+  projectName: string;
 }
 
 export interface InitiateProps extends AuthKeyProps {
@@ -15,6 +17,7 @@ export interface InitiateProps extends AuthKeyProps {
 
 interface OnlineInfoProps extends AuthKeyProps {
   userIds: string;
+  chatAuthId: string; // for selfUser's chatAuthId
 }
 
 type OnlineInfoReturnProps = Pick<
@@ -24,12 +27,22 @@ type OnlineInfoReturnProps = Pick<
 
 interface ReadTokenProps extends AuthKeyProps {
   roomIds: string;
+  chatAuthId: string; //selfUser's chatAuthId
 }
 
 type ReadTokenReturnProps = Pick<
   RoomProps,
   "chatRoomAuthId" | "lastMessageReadToken"
 >;
+
+interface HandleLoggerProps extends InitiateProps {
+  error: {
+    error: Error | string | { [key: string]: any } | unknown;
+    event: string;
+  };
+  chatAuthId?: string;
+  chatRoomAuthId?: string;
+}
 
 const project = {
   SDK: "React Native SDK",
@@ -58,14 +71,22 @@ export const initiate = async (props: InitiateProps) => {
     }
 
     return;
-  } catch {
-    // TODO: Log error
-    /* empty */
+  } catch (error) {
+    // Log error to service
+    handleLogger({
+      apiKey,
+      subscriptionKey,
+      projectName,
+      error: {
+        error,
+        event: events.INITIATE_TENANT_CONFIGS,
+      },
+    });
   }
 };
 
 export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
-  const { userIds, apiKey, subscriptionKey } = props;
+  const { userIds, apiKey, subscriptionKey, projectName, chatAuthId } = props;
 
   try {
     const response = await axios.get<OnlineInfoReturnProps[]>(
@@ -82,14 +103,23 @@ export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
     );
 
     return response.data;
-  } catch {
-    // TODO: Log error
-    /* empty */
+  } catch (error) {
+    // Log error to service
+    handleLogger({
+      apiKey,
+      subscriptionKey,
+      projectName,
+      error: {
+        error,
+        event: events.GET_USERS_ONLINE_INFO,
+      },
+      chatAuthId,
+    });
   }
 };
 
 export const getRoomsReadToken = async (props: ReadTokenProps) => {
-  const { roomIds, apiKey, subscriptionKey } = props;
+  const { roomIds, apiKey, subscriptionKey, projectName, chatAuthId } = props;
 
   try {
     const response = await axios.get<ReadTokenReturnProps[]>(
@@ -105,8 +135,49 @@ export const getRoomsReadToken = async (props: ReadTokenProps) => {
       },
     );
     return response.data;
-  } catch {
+  } catch (error) {
     // TODO: Log error
-    /* empty */
+    handleLogger({
+      apiKey,
+      subscriptionKey,
+      projectName,
+      error: {
+        error,
+        event: events.GET_ROOMS_READ_TOKEN,
+      },
+      chatAuthId,
+    });
+  }
+};
+
+export const handleLogger = async (props: HandleLoggerProps) => {
+  const {
+    apiKey,
+    subscriptionKey,
+    projectName,
+    error,
+    chatAuthId,
+    chatRoomAuthId,
+  } = props;
+
+  const logObject = {
+    projectName,
+    SDK: project.name,
+    version: project.version,
+    error,
+    ...(chatAuthId && { chatAuthId }),
+    ...(chatRoomAuthId && { chatRoomAuthId }),
+  };
+
+  try {
+    axios.post("/system/logger", logObject, {
+      headers: {
+        apiKey,
+        subscriptionKey,
+      },
+    });
+  } catch (error_) {
+    // Log error
+    console.log("handle Logger failed", error_);
   }
 };

@@ -16,8 +16,9 @@ interface onSendMessageProps {
 const useSendMessage = () => {
   const {
     state: {
+      users: { selfUser },
       app: {
-        configs: { secretKey },
+        configs: { secretKey, apiKey, subscriptionKey, projectName },
       },
     },
     dispatch,
@@ -59,6 +60,14 @@ const useSendMessage = () => {
             roomId: roomId,
           })(dispatch);
         }
+      },
+      //handle Log params
+      {
+        apiKey,
+        subscriptionKey,
+        projectName,
+        chatAuthId: selfUser!.chatAuthId,
+        chatRoomAuthId,
       },
     );
   };
