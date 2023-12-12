@@ -10,7 +10,7 @@ const useSetUsers = () => {
     state: {
       users: { selfUser },
       app: {
-        configs: { apiKey, subscriptionKey, indicators },
+        configs: { apiKey, subscriptionKey, indicators, projectName },
       },
     },
     dispatch,
@@ -27,6 +27,8 @@ const useSetUsers = () => {
         userIds,
         apiKey,
         subscriptionKey,
+        projectName,
+        chatAuthId: selfUser!.chatAuthId,
       });
 
       // Match the 'online' field for active users from the service data
