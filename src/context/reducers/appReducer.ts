@@ -16,6 +16,7 @@ export type ConfigsProps = {
   apiKey: string;
   subscriptionKey: string;
   secretKey: string;
+  projectName: string;
 };
 
 export type AppState = {
@@ -35,6 +36,7 @@ export const AppValues: AppState = {
     apiKey: "",
     subscriptionKey: "",
     secretKey: "",
+    projectName: "",
   },
 };
 
