@@ -5,13 +5,17 @@ import { RoomProps } from "../context/reducers/roomsReducer";
 import PackageJson from "../../package.json";
 import * as events from "../utils/events";
 
-export interface InitiateProps {
+interface AuthKeyProps {
   apiKey: string;
   subscriptionKey: string;
   projectName: string;
 }
 
-interface OnlineInfoProps extends InitiateProps {
+export interface InitiateProps extends AuthKeyProps {
+  projectName: string;
+}
+
+interface OnlineInfoProps extends AuthKeyProps {
   userIds: string;
   chatAuthId: string; // for selfUser's chatAuthId
 }
@@ -21,7 +25,7 @@ type OnlineInfoReturnProps = Pick<
   "chatAuthId" | "socketId" | "online"
 >;
 
-interface ReadTokenProps extends InitiateProps {
+interface ReadTokenProps extends AuthKeyProps {
   roomIds: string;
   chatAuthId: string; //selfUser's chatAuthId
 }
@@ -41,7 +45,7 @@ interface HandleLoggerProps extends InitiateProps {
 }
 
 const project = {
-  name: "React Native SDK",
+  SDK: "React Native SDK",
   version: PackageJson.version,
 };
 
@@ -52,8 +56,9 @@ export const initiate = async (props: InitiateProps) => {
     const response = await axios.get<ConfigsProps>(`/api/v1/tenant/config/`, {
       params: {
         plugin: true, // This is for backend compatibility
-        project: project.name, // This is for backend compatibility & analytics
+        SDK: project.SDK, // This is for backend compatibility & analytics
         version: project.version, // This is for backend compatibility & analytics
+        name: projectName, // This is for backend compatibility & analytics
       },
       headers: {
         apiKey,
