@@ -12,6 +12,8 @@ import {
 import { updateTypingUsers } from "../context/actions/typingUsersAction";
 import { IndicatorProps } from "../context/reducers/appReducer";
 import { aesDecrypt } from "./encryption";
+import { handleLogger } from "../service";
+import * as events from "./events";
 
 const SocketController = () => {
   const {
@@ -19,7 +21,14 @@ const SocketController = () => {
       rooms,
       users: { selfUser, users },
       app: {
-        configs: { indicators, tenantId, apiKey, subscriptionKey, secretKey },
+        configs: {
+          indicators,
+          tenantId,
+          apiKey,
+          subscriptionKey,
+          secretKey,
+          projectName,
+        },
       },
     },
     dispatch,
@@ -27,11 +36,24 @@ const SocketController = () => {
 
   useEffect(() => {
     // initialize socket connection
-    connect({
-      chatAuthId: selfUser?.chatAuthId,
-      tenantId,
-      auth: { apiKey, subscriptionKey },
-    });
+    try {
+      connect({
+        chatAuthId: selfUser?.chatAuthId,
+        tenantId,
+        auth: { apiKey, subscriptionKey },
+      });
+    } catch (error) {
+      handleLogger({
+        apiKey,
+        subscriptionKey,
+        projectName,
+        chatAuthId: selfUser?.chatAuthId,
+        error: {
+          error,
+          event: events.INITIALIZE_SOCKET_CONNECT,
+        },
+      });
+    }
 
     return () => {
       socket.disconnect();
@@ -40,17 +62,39 @@ const SocketController = () => {
 
   useEffect(() => {
     // listen authentication error
-    socket.on(types.CONNECT_ERROR, (err) => {
-      console.log("errrr", err.message);
+    socket.on(types.CONNECT_ERROR, (error) => {
+      handleLogger({
+        apiKey,
+        subscriptionKey,
+        projectName,
+        chatAuthId: selfUser?.chatAuthId,
+        error: {
+          error,
+          event: types.CONNECT_ERROR,
+        },
+      });
     });
   }, []);
 
   useEffect(() => {
     const chatRoomAuthIds = rooms.map(({ chatRoomAuthId }) => chatRoomAuthId);
     // join all rooms
-    socket?.emit(types.JOIN_ROOMS, chatRoomAuthIds, (joinedRooms) => {
-      console.log("JOINED", joinedRooms);
-    });
+    try {
+      socket?.emit(types.JOIN_ROOMS, chatRoomAuthIds, (joinedRooms) => {
+        console.log("JOINED", joinedRooms);
+      });
+    } catch (error) {
+      handleLogger({
+        apiKey,
+        subscriptionKey,
+        projectName,
+        chatAuthId: selfUser?.chatAuthId,
+        error: {
+          error,
+          event: types.JOIN_ROOMS,
+        },
+      });
+    }
   }, [socket, rooms]);
 
   useEffect(() => {
@@ -63,7 +107,20 @@ const SocketController = () => {
   useEffect(() => {
     if (indicators.includes(IndicatorProps.ONLINE)) {
       socket.on(types.USER_ACTIVE, (chatAuthId) => {
-        updateUserOnline({ chatAuthId, online: true })(dispatch);
+        try {
+          updateUserOnline({ chatAuthId, online: true })(dispatch);
+        } catch (error) {
+          handleLogger({
+            apiKey,
+            subscriptionKey,
+            projectName,
+            chatAuthId: selfUser?.chatAuthId,
+            error: {
+              error,
+              event: types.USER_ACTIVE,
+            },
+          });
+        }
       });
     }
   }, []);
@@ -71,7 +128,20 @@ const SocketController = () => {
   useEffect(() => {
     if (indicators.includes(IndicatorProps.ONLINE)) {
       socket.on(types.USER_DISCONNECTED, (chatAuthId) => {
-        updateUserOnline({ chatAuthId, online: false })(dispatch);
+        try {
+          updateUserOnline({ chatAuthId, online: false })(dispatch);
+        } catch (error) {
+          handleLogger({
+            apiKey,
+            subscriptionKey,
+            projectName,
+            chatAuthId: selfUser?.chatAuthId,
+            error: {
+              error,
+              event: types.USER_DISCONNECTED,
+            },
+          });
+        }
       });
     }
   }, []);
@@ -79,7 +149,21 @@ const SocketController = () => {
   useEffect(() => {
     if (indicators.includes(IndicatorProps.TYPING)) {
       socket.on(types.RECEIVE_TYPING_STATUS, (data) => {
-        updateTypingUsers(data)(dispatch);
+        try {
+          updateTypingUsers(data)(dispatch);
+        } catch (error) {
+          handleLogger({
+            apiKey,
+            subscriptionKey,
+            projectName,
+            chatAuthId: selfUser?.chatAuthId,
+            chatRoomAuthId: data.chatRoomAuthId,
+            error: {
+              error,
+              event: types.RECEIVE_TYPING_STATUS,
+            },
+          });
+        }
       });
     }
   }, [indicators]);
@@ -87,52 +171,93 @@ const SocketController = () => {
   useEffect(() => {
     if (indicators.includes(IndicatorProps.MESSAGE_READ)) {
       socket.on(types.RECEIVE_READ_TOKEN, (data) => {
-        updateReadToken(data)(dispatch);
+        try {
+          updateReadToken(data)(dispatch);
+        } catch (error) {
+          handleLogger({
+            apiKey,
+            subscriptionKey,
+            projectName,
+            chatAuthId: selfUser?.chatAuthId,
+            chatRoomAuthId: data.chatRoomAuthId,
+            error: {
+              error,
+              event: types.RECEIVE_READ_TOKEN,
+            },
+          });
+        }
       });
     }
   }, []);
 
   useEffect(() => {
     socket.on(types.JOIN_NEW_ROOM, (data) => {
-      addRoom(data.room)(dispatch);
+      try {
+        addRoom(data.room)(dispatch);
+      } catch (error) {
+        handleLogger({
+          apiKey,
+          subscriptionKey,
+          projectName,
+          chatAuthId: selfUser?.chatAuthId,
+          chatRoomAuthId: data.room.chatRoomAuthId,
+          error: {
+            error,
+            event: types.JOIN_NEW_ROOM,
+          },
+        });
+      }
     });
   }, []);
 
   const handleMessage = (data: DataProps) => {
-    const { message: messageData, iv } = data;
-    // decrypt the encrypted message
-    const decryptedMessage: MessageInfoProps = JSON.parse(
-      aesDecrypt({
-        key: secretKey,
-        iv,
-        encryptedMessageData: messageData,
-      }),
-    );
+    try {
+      const { message: messageData, iv } = data;
+      // decrypt the encrypted message
+      const decryptedMessage: MessageInfoProps = JSON.parse(
+        aesDecrypt({
+          key: secretKey,
+          iv,
+          encryptedMessageData: messageData,
+        }),
+      );
 
-    let { message } = decryptedMessage;
-    const { roomId } = decryptedMessage;
+      let { message } = decryptedMessage;
+      const { roomId } = decryptedMessage;
 
-    message = { ...message, user: { _id: message.senderId } };
-    const room = rooms.find(({ roomId: Id }) => Id === roomId);
+      message = { ...message, user: { _id: message.senderId } };
+      const room = rooms.find(({ roomId: Id }) => Id === roomId);
 
-    // if message belongs community room, add avatar and name to user object
-    if (room && room.groupAvatar) {
-      const senderUser = users.find((user) => user._id === message.senderId);
+      // if message belongs community room, add avatar and name to user object
+      if (room && room.groupAvatar) {
+        const senderUser = users.find((user) => user._id === message.senderId);
 
-      if (senderUser) {
-        message.user = {
-          ...message.user,
-          avatar: senderUser.avatar,
-          name: senderUser.username,
-        };
+        if (senderUser) {
+          message.user = {
+            ...message.user,
+            avatar: senderUser.avatar,
+            name: senderUser.username,
+          };
+        }
       }
+      // update context messages structure
+      addMessage({ message, roomId })(dispatch);
+      updateLastMessage({
+        lastMessage: message,
+        roomId: roomId,
+      })(dispatch);
+    } catch (error) {
+      handleLogger({
+        apiKey,
+        subscriptionKey,
+        projectName,
+        chatAuthId: selfUser?.chatAuthId,
+        error: {
+          error,
+          event: types.RECEIVE_MESSAGE,
+        },
+      });
     }
-    // update context messages structure
-    addMessage({ message, roomId })(dispatch);
-    updateLastMessage({
-      lastMessage: message,
-      roomId: roomId,
-    })(dispatch);
   };
 
   return null;

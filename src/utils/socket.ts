@@ -2,6 +2,7 @@ import { ICustomMessage } from "../context/reducers/messagesReducer";
 import { Socket, io } from "socket.io-client";
 import * as types from "./emitTypes";
 import { RoomProps } from "../context/reducers/roomsReducer";
+import { handleLogger } from "../service";
 
 export type MessageInfoProps = {
   message: ICustomMessage;
@@ -72,6 +73,14 @@ interface ConnectProps {
   };
 }
 
+type HandleLogProps = {
+  apiKey: string;
+  subscriptionKey: string;
+  projectName: string;
+  chatAuthId: string;
+  chatRoomAuthId?: string;
+};
+
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export const connect = (props: ConnectProps) => {
@@ -85,25 +94,75 @@ export const connect = (props: ConnectProps) => {
 export const sendMessage = (
   data: DataProps,
   callback: (status: string) => void,
+  handleLogParams: HandleLogProps,
 ) => {
-  socket.emit(types.SEND_MESSAGE, data, ({ status }) => {
-    callback(status);
-  });
+  try {
+    socket.emit(types.SEND_MESSAGE, data, ({ status }) => {
+      callback(status);
+    });
+  } catch (error) {
+    handleLogger({
+      ...handleLogParams,
+      error: {
+        error,
+        event: types.SEND_MESSAGE,
+      },
+    });
+  }
 };
 
-export const sendTypingStatus = (data: TypingProps) => {
-  socket.emit(types.SEND_TYPING_STATUS, data);
+export const sendTypingStatus = (
+  data: TypingProps,
+  handleLogParams: HandleLogProps,
+) => {
+  try {
+    socket.emit(types.SEND_TYPING_STATUS, data);
+  } catch (error) {
+    handleLogger({
+      ...handleLogParams,
+      chatRoomAuthId: data.chatRoomAuthId,
+      error: {
+        error,
+        event: types.SEND_TYPING_STATUS,
+      },
+    });
+  }
 };
 
-export const sendReadToken = (data: ReadTokenProps) => {
-  socket.emit(types.SEND_READ_TOKEN, data);
+export const sendReadToken = (
+  data: ReadTokenProps,
+  handleLogParams: HandleLogProps,
+) => {
+  try {
+    socket.emit(types.SEND_READ_TOKEN, data);
+  } catch (error) {
+    handleLogger({
+      ...handleLogParams,
+      chatRoomAuthId: data.chatRoomAuthId,
+      error: {
+        error,
+        event: types.SEND_READ_TOKEN,
+      },
+    });
+  }
 };
 
 export const createNewRoom = (
   data: CreateRoomProps,
   callback: (room: RoomProps) => void,
+  handleLogParams: HandleLogProps,
 ) => {
-  socket.emit(types.CREATE_NEW_ROOM, data, ({ room }) => {
-    callback(room);
-  });
+  try {
+    socket.emit(types.CREATE_NEW_ROOM, data, ({ room }) => {
+      callback(room);
+    });
+  } catch (error) {
+    handleLogger({
+      ...handleLogParams,
+      error: {
+        error,
+        event: types.CREATE_NEW_ROOM,
+      },
+    });
+  }
 };
