@@ -8,8 +8,9 @@ import { IndicatorProps } from "../context/reducers/appReducer";
 const useSetRooms = () => {
   const {
     state: {
+      users: { selfUser },
       app: {
-        configs: { apiKey, subscriptionKey, indicators },
+        configs: { apiKey, subscriptionKey, indicators, projectName },
       },
     },
     dispatch,
@@ -21,6 +22,8 @@ const useSetRooms = () => {
         roomIds: rooms.map((room) => room.chatRoomAuthId).join(","),
         apiKey,
         subscriptionKey,
+        projectName,
+        chatAuthId: selfUser!.chatAuthId,
       });
 
       // Match the 'lastMessageReadToken' field for active rooms from the service data
