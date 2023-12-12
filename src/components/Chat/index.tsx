@@ -47,7 +47,7 @@ const Chat = ({
       rooms,
       messages,
       app: {
-        configs: { indicators, tenantId },
+        configs: { indicators, tenantId, apiKey, subscriptionKey, projectName },
       },
     },
     dispatch,
@@ -86,21 +86,39 @@ const Chat = ({
       activeRoom?.lastMessage?.user?._id !== selfUser?._id
     ) {
       // Update the room's lastMessageReadToken field
-      sendReadToken({
-        token: dayjs().valueOf(),
-        chatRoomAuthId: activeRoom.chatRoomAuthId,
-      });
+      sendReadToken(
+        {
+          token: dayjs().valueOf(),
+          chatRoomAuthId: activeRoom.chatRoomAuthId,
+        },
+        //handle Log params
+        {
+          apiKey,
+          subscriptionKey,
+          projectName,
+          chatAuthId: selfUser!.chatAuthId,
+        },
+      );
     }
   }, [indicators, activeRoom?.lastMessage]);
 
   const typingStatus = (isTyping: boolean) => {
     selfUser &&
       activeRoom &&
-      sendTypingStatus({
-        isTyping,
-        userId: selfUser._id,
-        chatRoomAuthId: activeRoom.chatRoomAuthId,
-      });
+      sendTypingStatus(
+        {
+          isTyping,
+          userId: selfUser._id,
+          chatRoomAuthId: activeRoom.chatRoomAuthId,
+        },
+        //handle Log params
+        {
+          apiKey,
+          subscriptionKey,
+          projectName,
+          chatAuthId: selfUser!.chatAuthId,
+        },
+      );
     isAlreadyTypingRef.current = isTyping;
   };
 
@@ -180,11 +198,21 @@ const Chat = ({
           tenantId,
         };
         // Create new room with socket event
-        createNewRoom(data, (room) => {
-          setActiveRoom(room);
-          addRoom(room)(dispatch);
-          sendMessage(message, room);
-        });
+        createNewRoom(
+          data,
+          (room) => {
+            setActiveRoom(room);
+            addRoom(room)(dispatch);
+            sendMessage(message, room);
+          },
+          //handle Log params
+          {
+            apiKey,
+            subscriptionKey,
+            projectName,
+            chatAuthId: selfUser!.chatAuthId,
+          },
+        );
       }
     } else {
       // if room exist send message
