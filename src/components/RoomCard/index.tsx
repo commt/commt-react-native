@@ -147,7 +147,9 @@ const RoomCard = ({ room, onClickAction }: RoomCardProps) => {
               {!isLastMessageBySelfUser && room.groupName
                 ? `${room.lastMessage?.user.name}: `
                 : ""}
-              {room.lastMessage?.text}
+              {room.lastMessage?.text &&
+                room.lastMessage.text.slice(0, 25) +
+                  (room.lastMessage.text.length > 25 ? "..." : "")}
             </MessageText>
           )}
         </View>
