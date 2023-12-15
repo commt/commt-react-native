@@ -37,6 +37,7 @@ const useSendMessage = () => {
 
     // Encrypt message with RSA; If the tenant enabled E2E encryption and it's not a system message
     if (e2e && !message.system) {
+      // TODO: Investigation for group/community chat RSA encryption
       const room = rooms.find((room) => room.roomId === roomId);
 
       // Find the opposing user ID among one-to-one room participants
