@@ -40,22 +40,23 @@ const useSendMessage = () => {
       // TODO: Investigation for group/community chat RSA encryption
       const room = rooms.find((room) => room.roomId === roomId);
 
-      // Find the opposing user ID among one-to-one room participants
-      const oppositeUserId = room?.groupName
-        ? null
-        : room?.participants.find(
-            (id) => id !== selfUser?._id && !id.startsWith("system"),
-          );
+      if (room && !room.groupName) {
+        // Find the opposing user ID among one-to-one room participants
+        const oppositeUserId = room.participants.find(
+          (id) => id !== selfUser?._id && !id.startsWith("system"),
+        );
 
-      const oppositeUserPck = users.find((user) => user._id === oppositeUserId)
-        ?.publicKey;
+        const oppositeUserPck = users.find(
+          (user) => user._id === oppositeUserId,
+        )?.publicKey;
 
-      // If the opposite user has a public key, the message text is encrypted using RSA.
-      if (oppositeUserPck) {
-        encryptedMessage = rsaEncrypt({
-          message: encryptedMessage,
-          publicKey: oppositeUserPck,
-        });
+        // If the opposite user has a public key, the message text is encrypted using RSA.
+        if (oppositeUserPck) {
+          encryptedMessage = rsaEncrypt({
+            message: encryptedMessage,
+            publicKey: oppositeUserPck,
+          });
+        }
       }
     }
 
