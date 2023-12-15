@@ -2,7 +2,6 @@ import forge, { pki } from "node-forge";
 
 interface KeyProps {
   key: string;
-  iv: string;
 }
 
 interface AesEncryptProps extends KeyProps {
@@ -11,6 +10,7 @@ interface AesEncryptProps extends KeyProps {
 
 interface AesDecryptProps extends KeyProps {
   encryptedMessageData: string;
+  iv: string;
 }
 
 interface RsaEncryptProps {
@@ -23,18 +23,19 @@ interface RsaDecryptProps {
   privateKey: string;
 }
 
-export const aesEncrypt = ({
-  messageData,
-  key,
-  iv,
-}: AesEncryptProps): string => {
+export const aesEncrypt = ({ messageData, key }: AesEncryptProps) => {
+  let iv = forge.random.getBytesSync(16);
   const cipher = forge.cipher.createCipher("AES-CBC", key);
 
   cipher.start({ iv });
   cipher.update(forge.util.createBuffer(messageData, "utf8"));
   cipher.finish();
-  // return encrypted data
-  return cipher.output.toHex();
+
+  const encryptedMessage = cipher.output.toHex();
+  iv = forge.util.bytesToHex(iv);
+
+  // return encrypted message and iv
+  return { encryptedMessage, iv };
 };
 
 export const aesDecrypt = ({

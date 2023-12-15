@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { IMessage } from "react-native-gifted-chat";
-import forge from "node-forge";
 import { sendMessage } from "../utils/socket";
 import { CommtContext } from "../context/Context";
 import { addMessage } from "../context/actions/messagesAction";
@@ -61,10 +60,8 @@ const useSendMessage = () => {
     }
 
     // AES encryption is the standard encryption method and encrypts every messages. It encrypts data by generating IV.
-    const iv = forge.random.getBytesSync(16);
-    encryptedMessage = aesEncrypt({
+    const { encryptedMessage: encryptedMsg, iv } = aesEncrypt({
       key: secretKey,
-      iv,
       messageData: JSON.stringify({
         message: { ...messageContent, text: encryptedMessage },
         roomId,
@@ -74,8 +71,8 @@ const useSendMessage = () => {
 
     sendMessage(
       {
-        message: encryptedMessage,
-        iv: forge.util.bytesToHex(iv),
+        message: encryptedMsg,
+        iv,
       },
       (status) => {
         // If the message sending succesfully
