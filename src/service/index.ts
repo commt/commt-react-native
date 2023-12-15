@@ -5,17 +5,13 @@ import { RoomProps } from "../context/reducers/roomsReducer";
 import PackageJson from "../../package.json";
 import * as events from "../utils/events";
 
-interface AuthKeyProps {
+export interface InitiateProps {
   apiKey: string;
   subscriptionKey: string;
   projectName: string;
 }
 
-export interface InitiateProps extends AuthKeyProps {
-  projectName: string;
-}
-
-interface OnlineInfoProps extends AuthKeyProps {
+interface OnlineInfoProps extends InitiateProps {
   userIds: string;
   chatAuthId: string; // for selfUser's chatAuthId
 }
@@ -25,7 +21,7 @@ type OnlineInfoReturnProps = Pick<
   "chatAuthId" | "socketId" | "online"
 >;
 
-interface ReadTokenProps extends AuthKeyProps {
+interface ReadTokenProps extends InitiateProps {
   roomIds: string;
   chatAuthId: string; //selfUser's chatAuthId
 }
@@ -162,7 +158,7 @@ export const handleLogger = async (props: HandleLoggerProps) => {
 
   const logObject = {
     projectName,
-    SDK: project.name,
+    SDK: project.SDK,
     version: project.version,
     error,
     ...(chatAuthId && { chatAuthId }),

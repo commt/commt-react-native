@@ -11,7 +11,7 @@ import {
 } from "../context/actions/roomsActions";
 import { updateTypingUsers } from "../context/actions/typingUsersAction";
 import { IndicatorProps } from "../context/reducers/appReducer";
-import { aesDecrypt } from "./encryption";
+import { aesDecrypt, rsaDecrypt } from "./encryption";
 import { handleLogger } from "../service";
 import * as events from "./events";
 
@@ -28,6 +28,7 @@ const SocketController = () => {
           subscriptionKey,
           secretKey,
           projectName,
+          e2e,
         },
       },
     },
@@ -213,7 +214,7 @@ const SocketController = () => {
   const handleMessage = (data: DataProps) => {
     try {
       const { message: messageData, iv } = data;
-      // decrypt the encrypted message
+      // Decrypt, encrypted message with AES
       const decryptedMessage: MessageInfoProps = JSON.parse(
         aesDecrypt({
           key: secretKey,
@@ -224,9 +225,30 @@ const SocketController = () => {
 
       let { message } = decryptedMessage;
       const { roomId } = decryptedMessage;
+      const room = rooms.find(({ roomId: Id }) => Id === roomId);
+
+      /**
+       * If the tenant enabled E2E encryption and
+       * It's not a system message and
+       * The active user has a private key and
+       * The room is not a community room (one-to-one room)
+       * Decrypt RSA message
+       */
+      if (
+        e2e &&
+        selfUser?.privateKey &&
+        !room?.groupAvatar &&
+        !message.system
+      ) {
+        // decrypt message text using RSA
+        const decryptedMsg = rsaDecrypt({
+          encryptedMsg: message.text,
+          privateKey: selfUser.privateKey,
+        });
+        message = { ...message, text: decryptedMsg };
+      }
 
       message = { ...message, user: { _id: message.senderId } };
-      const room = rooms.find(({ roomId: Id }) => Id === roomId);
 
       // if message belongs community room, add avatar and name to user object
       if (room && room.groupAvatar) {
