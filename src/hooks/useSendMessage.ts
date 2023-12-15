@@ -41,7 +41,7 @@ const useSendMessage = () => {
       const room = rooms.find((room) => room.roomId === roomId);
 
       if (room && !room.groupName) {
-        // Find the opposing user ID among one-to-one room participants
+        // Find the opposite user ID among one-to-one room participants
         const oppositeUserId = room.participants.find(
           (id) => id !== selfUser?._id && !id.startsWith("system"),
         );
