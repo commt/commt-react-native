@@ -62,6 +62,11 @@ interface ClientToServerEvents {
     data: CreateRoomProps,
     callback: ({ room }: { room: RoomProps }) => void,
   ) => void;
+
+  [types.LEAVE_ROOM]: (
+    chatRoomAuthId: string,
+    callback: ({ status }: { status: string }) => void,
+  ) => void;
 }
 
 interface ConnectProps {
