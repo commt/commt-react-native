@@ -52,7 +52,8 @@ type UsersActions =
 type MessagesActions =
   | { type: "SET_MESSAGES"; payload: IMessagesData }
   | { type: "ADD_MESSAGE"; payload: AddMessageProps }
-  | { type: "ADD_MORE_MESSAGES"; payload: AddMoreMessagesProps };
+  | { type: "ADD_MORE_MESSAGES"; payload: AddMoreMessagesProps }
+  | { type: "DELETE_MESSAGES"; payload: string };
 
 type AppActions =
   | { type: "TOGGLE_THEME"; payload: DefaultTheme }
