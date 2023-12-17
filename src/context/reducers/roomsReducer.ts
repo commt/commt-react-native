@@ -22,6 +22,11 @@ export function roomsReducer(state: RoomProps[], action: CommtContextActions) {
       return [...state, action.payload];
     }
 
+    case "DELETE_ROOM": {
+      const chatRoomAuthId = action.payload;
+      return state.filter((room) => room.chatRoomAuthId !== chatRoomAuthId);
+    }
+
     case "UPDATE_LAST_MESSAGE": {
       const { roomId, lastMessage } = action.payload;
       return state.map((room) =>

@@ -39,6 +39,7 @@ export const InitialState: CommtContextData = {
 type RoomsActions =
   | { type: "SET_ROOMS"; payload: RoomProps[] }
   | { type: "ADD_ROOM"; payload: RoomProps }
+  | { type: "DELETE_ROOM"; payload: string }
   | { type: "UPDATE_LAST_MESSAGE"; payload: UpdateLastMessageProps }
   | { type: "UPDATE_READ_TOKEN"; payload: ReadTokenProps }
   | { type: "UPDATE_UNREAD_MSG_COUNT"; payload: UpdateUnreadMsgCountProps };
