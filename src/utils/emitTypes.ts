@@ -17,3 +17,4 @@ export const RECEIVE_READ_TOKEN = "receive_read_token";
 export const CREATE_NEW_ROOM = "create_new_room";
 export const CONNECT_ERROR = "connect_error";
 export const LEAVE_ROOM = "leave_room";
+export const UNSUBSCRIBE_ROOM = "unsubscribe_room";
