@@ -4,11 +4,11 @@ export type UserProps = {
   _id: string;
   chatAuthId: string;
   username: string;
-  avatar: string;
+  avatar?: string;
   online: boolean;
   socketId?: string | undefined;
-  privateKey: string;
-  publicKey: string;
+  privateKey?: string;
+  publicKey?: string;
 };
 
 export type UserState = {

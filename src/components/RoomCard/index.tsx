@@ -120,7 +120,9 @@ const RoomCard = ({ room, onClickAction }: RoomCardProps) => {
 
   const oppositeUserId = room.groupName
     ? null
-    : room.participants.find((id) => id !== selfUser?._id);
+    : room.participants.find(
+        (id) => id !== selfUser?._id && !id.startsWith("system"),
+      );
   const oppositeUser = oppositeUserId
     ? users.find((user: UserProps) => user._id === oppositeUserId)
     : null;
@@ -145,7 +147,9 @@ const RoomCard = ({ room, onClickAction }: RoomCardProps) => {
               {!isLastMessageBySelfUser && room.groupName
                 ? `${room.lastMessage?.user.name}: `
                 : ""}
-              {room.lastMessage?.text}
+              {room.lastMessage?.text &&
+                room.lastMessage.text.slice(0, 25) +
+                  (room.lastMessage.text.length > 25 ? "..." : "")}
             </MessageText>
           )}
         </View>

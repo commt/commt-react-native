@@ -32,8 +32,12 @@ const ChatHeader = ({
   const oppositeUserId = room
     ? room.groupName
       ? null
-      : room.participants.find((id) => id !== selfUser?._id)
-    : participants?.find((id) => id !== selfUser?._id);
+      : room.participants.find(
+          (id) => id !== selfUser?._id && !id.startsWith("system"),
+        )
+    : participants?.find(
+        (id) => id !== selfUser?._id && !id.startsWith("system"),
+      );
   const oppositeUser = users.find(({ _id }) => _id === oppositeUserId);
 
   const renderMembersOrOnline = () => {
