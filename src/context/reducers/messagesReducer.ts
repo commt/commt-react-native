@@ -57,6 +57,15 @@ export function messagesReducer(
       };
     }
 
+    case "DELETE_MESSAGES": {
+      const roomId = action.payload;
+
+      const messages = { ...state };
+      delete messages[roomId];
+
+      return messages;
+    }
+
     default: {
       return state;
     }

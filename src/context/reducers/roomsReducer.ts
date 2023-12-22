@@ -22,6 +22,16 @@ export function roomsReducer(state: RoomProps[], action: CommtContextActions) {
       return [...state, action.payload];
     }
 
+    case "DELETE_ROOM": {
+      const rooms = [...state];
+      const roomIndexToBeDeleted = rooms.findIndex(
+        (r) => r.chatRoomAuthId === action.payload,
+      ); // action.payload represents the chatRoomAuthId of the room to be deleted from the state
+      rooms.splice(roomIndexToBeDeleted, 1); // Delete that particular index from the instance of the rooms
+
+      return rooms;
+    }
+
     case "UPDATE_LAST_MESSAGE": {
       const { roomId, lastMessage } = action.payload;
       return state.map((room) =>

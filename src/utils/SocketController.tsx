@@ -3,9 +3,10 @@ import { connect, socket, DataProps, MessageInfoProps } from "./socket";
 import { CommtContext } from "../context/Context";
 import * as types from "./emitTypes";
 import { updateUserOnline } from "../context/actions/usersActions";
-import { addMessage } from "../context/actions/messagesAction";
+import { addMessage, deleteMessages } from "../context/actions/messagesAction";
 import {
   addRoom,
+  deleteRoom,
   updateLastMessage,
   updateReadToken,
 } from "../context/actions/roomsActions";
@@ -21,15 +22,7 @@ const SocketController = () => {
       rooms,
       users: { selfUser, users },
       app: {
-        configs: {
-          indicators,
-          tenantId,
-          apiKey,
-          subscriptionKey,
-          secretKey,
-          projectName,
-          e2e,
-        },
+        configs: { indicators, tenantId, apiKey, projectId, secretKey, e2e },
       },
     },
     dispatch,
@@ -41,13 +34,13 @@ const SocketController = () => {
       connect({
         chatAuthId: selfUser?.chatAuthId,
         tenantId,
-        auth: { apiKey, subscriptionKey },
+        projectId,
+        auth: { apiKey },
       });
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -66,8 +59,7 @@ const SocketController = () => {
     socket.on(types.CONNECT_ERROR, (error) => {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -87,8 +79,7 @@ const SocketController = () => {
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -113,8 +104,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             error: {
               error,
@@ -134,8 +124,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             error: {
               error,
@@ -155,8 +144,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             chatRoomAuthId: data.chatRoomAuthId,
             error: {
@@ -177,8 +165,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             chatRoomAuthId: data.chatRoomAuthId,
             error: {
@@ -198,8 +185,7 @@ const SocketController = () => {
       } catch (error) {
         handleLogger({
           apiKey,
-          subscriptionKey,
-          projectName,
+          projectId,
           chatAuthId: selfUser?.chatAuthId,
           chatRoomAuthId: data.room.chatRoomAuthId,
           error: {
@@ -210,6 +196,37 @@ const SocketController = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    socket.on(types.UNSUBSCRIBE_ROOM, (chatRoomAuthId) => {
+      try {
+        // Send request to server to leave room
+        socket.emit(types.LEAVE_ROOM, chatRoomAuthId, ({ status }) => {
+          // Check if the socket successfully leaves the room
+          if (status === "success") {
+            const roomId = rooms.find(
+              (room) => room.chatRoomAuthId === chatRoomAuthId,
+            )?.roomId;
+
+            // Update the context
+            deleteRoom(chatRoomAuthId)(dispatch);
+            roomId && deleteMessages(roomId)(dispatch);
+          }
+        });
+      } catch (error) {
+        handleLogger({
+          apiKey,
+          projectId,
+          chatAuthId: selfUser?.chatAuthId,
+          chatRoomAuthId: chatRoomAuthId,
+          error: {
+            error,
+            event: types.UNSUBSCRIBE_ROOM,
+          },
+        });
+      }
+    });
+  }, [rooms]);
 
   const handleMessage = (data: DataProps) => {
     try {
@@ -271,8 +288,7 @@ const SocketController = () => {
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,

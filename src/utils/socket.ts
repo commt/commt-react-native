@@ -41,6 +41,7 @@ interface ServerToClientEvents {
   [types.RECEIVE_READ_TOKEN]: (data: ReadTokenProps) => void;
   [types.JOIN_NEW_ROOM]: (data: { room: RoomProps }) => void;
   [types.CONNECT_ERROR]: (err: Error) => void;
+  [types.UNSUBSCRIBE_ROOM]: (chatRoomAuthId: string) => void;
 }
 
 interface ClientToServerEvents {
@@ -62,21 +63,25 @@ interface ClientToServerEvents {
     data: CreateRoomProps,
     callback: ({ room }: { room: RoomProps }) => void,
   ) => void;
+
+  [types.LEAVE_ROOM]: (
+    chatRoomAuthId: string,
+    callback: ({ status }: { status: string }) => void,
+  ) => void;
 }
 
 interface ConnectProps {
   chatAuthId: string | undefined;
   tenantId: string;
+  projectId: string;
   auth: {
     apiKey: string;
-    subscriptionKey: string;
   };
 }
 
 type HandleLogProps = {
   apiKey: string;
-  subscriptionKey: string;
-  projectName: string;
+  projectId: string;
   chatAuthId: string;
   chatRoomAuthId?: string;
 };
@@ -84,9 +89,9 @@ type HandleLogProps = {
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export const connect = (props: ConnectProps) => {
-  const { chatAuthId, tenantId, auth } = props;
+  const { chatAuthId, tenantId, auth, projectId } = props;
   socket = io("https://service.commt.co", {
-    query: { chatAuthId, tenantId },
+    query: { chatAuthId, tenantId, projectId },
     auth,
   });
 };

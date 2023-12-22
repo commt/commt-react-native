@@ -24,6 +24,11 @@ export const addRoom =
     dispatch({ type: "ADD_ROOM", payload: room });
   };
 
+export const deleteRoom =
+  (chatRoomAuthId: string) => (dispatch: Dispatch<CommtContextActions>) => {
+    dispatch({ type: "DELETE_ROOM", payload: chatRoomAuthId });
+  };
+
 export const updateLastMessage =
   (data: UpdateLastMessageProps) =>
   (dispatch: Dispatch<CommtContextActions>) => {
