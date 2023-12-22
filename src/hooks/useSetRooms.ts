@@ -10,7 +10,7 @@ const useSetRooms = () => {
     state: {
       users: { selfUser },
       app: {
-        configs: { apiKey, subscriptionKey, indicators, projectName },
+        configs: { apiKey, indicators, projectId },
       },
     },
     dispatch,
@@ -21,8 +21,7 @@ const useSetRooms = () => {
       const activeRooms = await getRoomsReadToken({
         roomIds: rooms.map((room) => room.chatRoomAuthId).join(","),
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser!.chatAuthId,
       });
 

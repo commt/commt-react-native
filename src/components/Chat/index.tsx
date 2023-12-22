@@ -47,7 +47,7 @@ const Chat = ({
       rooms,
       messages,
       app: {
-        configs: { indicators, tenantId, apiKey, subscriptionKey, projectName },
+        configs: { indicators, tenantId, apiKey, projectId },
       },
     },
     dispatch,
@@ -94,8 +94,7 @@ const Chat = ({
         //handle Log params
         {
           apiKey,
-          subscriptionKey,
-          projectName,
+          projectId,
           chatAuthId: selfUser!.chatAuthId,
         },
       );
@@ -114,8 +113,7 @@ const Chat = ({
         //handle Log params
         {
           apiKey,
-          subscriptionKey,
-          projectName,
+          projectId,
           chatAuthId: selfUser!.chatAuthId,
         },
       );
@@ -208,8 +206,7 @@ const Chat = ({
           //handle Log params
           {
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser!.chatAuthId,
           },
         );

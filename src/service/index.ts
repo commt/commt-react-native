@@ -7,8 +7,7 @@ import * as events from "../utils/events";
 
 export interface InitiateProps {
   apiKey: string;
-  subscriptionKey: string;
-  projectName: string;
+  projectId: string;
 }
 
 interface OnlineInfoProps extends InitiateProps {
@@ -46,19 +45,17 @@ const project = {
 };
 
 export const initiate = async (props: InitiateProps) => {
-  const { apiKey, subscriptionKey, projectName } = props;
+  const { apiKey, projectId } = props;
 
   try {
-    const response = await axios.get<ConfigsProps>(`/api/v1/tenant/config/`, {
+    const response = await axios.get<ConfigsProps>(`/api/v1/project/config/`, {
       params: {
-        plugin: true, // This is for backend compatibility
         SDK: project.SDK, // This is for backend compatibility & analytics
         version: project.version, // This is for backend compatibility & analytics
-        name: projectName, // This is for backend compatibility & analytics
+        projectId, // This is for backend compatibility & analytics
       },
       headers: {
         apiKey,
-        subscriptionKey,
       },
     });
 
@@ -71,8 +68,7 @@ export const initiate = async (props: InitiateProps) => {
     // Log error to service
     handleLogger({
       apiKey,
-      subscriptionKey,
-      projectName,
+      projectId,
       error: {
         error,
         event: events.INITIATE_TENANT_CONFIGS,
@@ -82,7 +78,7 @@ export const initiate = async (props: InitiateProps) => {
 };
 
 export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
-  const { userIds, apiKey, subscriptionKey, projectName, chatAuthId } = props;
+  const { userIds, apiKey, projectId, chatAuthId } = props;
 
   try {
     const response = await axios.get<OnlineInfoReturnProps[]>(
@@ -93,7 +89,6 @@ export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
         },
         headers: {
           apiKey,
-          subscriptionKey,
         },
       },
     );
@@ -103,8 +98,7 @@ export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
     // Log error to service
     handleLogger({
       apiKey,
-      subscriptionKey,
-      projectName,
+      projectId,
       error: {
         error,
         event: events.GET_USERS_ONLINE_INFO,
@@ -115,7 +109,7 @@ export const getUsersOnlineInfo = async (props: OnlineInfoProps) => {
 };
 
 export const getRoomsReadToken = async (props: ReadTokenProps) => {
-  const { roomIds, apiKey, subscriptionKey, projectName, chatAuthId } = props;
+  const { roomIds, apiKey, projectId, chatAuthId } = props;
 
   try {
     const response = await axios.get<ReadTokenReturnProps[]>(
@@ -126,7 +120,6 @@ export const getRoomsReadToken = async (props: ReadTokenProps) => {
         },
         headers: {
           apiKey,
-          subscriptionKey,
         },
       },
     );
@@ -135,8 +128,7 @@ export const getRoomsReadToken = async (props: ReadTokenProps) => {
     // TODO: Log error
     handleLogger({
       apiKey,
-      subscriptionKey,
-      projectName,
+      projectId,
       error: {
         error,
         event: events.GET_ROOMS_READ_TOKEN,
@@ -147,17 +139,10 @@ export const getRoomsReadToken = async (props: ReadTokenProps) => {
 };
 
 export const handleLogger = async (props: HandleLoggerProps) => {
-  const {
-    apiKey,
-    subscriptionKey,
-    projectName,
-    error,
-    chatAuthId,
-    chatRoomAuthId,
-  } = props;
+  const { apiKey, projectId, error, chatAuthId, chatRoomAuthId } = props;
 
   const logObject = {
-    projectName,
+    projectId,
     SDK: project.SDK,
     version: project.version,
     error,
@@ -169,7 +154,6 @@ export const handleLogger = async (props: HandleLoggerProps) => {
     axios.post("/system/logger", logObject, {
       headers: {
         apiKey,
-        subscriptionKey,
       },
     });
   } catch (error_) {

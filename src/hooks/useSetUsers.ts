@@ -10,7 +10,7 @@ const useSetUsers = () => {
     state: {
       users: { selfUser },
       app: {
-        configs: { apiKey, subscriptionKey, indicators, projectName },
+        configs: { apiKey, indicators, projectId },
       },
     },
     dispatch,
@@ -26,8 +26,7 @@ const useSetUsers = () => {
       const activeUsers = await getUsersOnlineInfo({
         userIds,
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser!.chatAuthId,
       });
 
