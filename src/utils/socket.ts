@@ -41,6 +41,7 @@ interface ServerToClientEvents {
   [types.RECEIVE_READ_TOKEN]: (data: ReadTokenProps) => void;
   [types.JOIN_NEW_ROOM]: (data: { room: RoomProps }) => void;
   [types.CONNECT_ERROR]: (err: Error) => void;
+  [types.UNSUBSCRIBE_ROOM]: (chatRoomAuthId: string) => void;
 }
 
 interface ClientToServerEvents {
@@ -61,6 +62,11 @@ interface ClientToServerEvents {
   [types.CREATE_NEW_ROOM]: (
     data: CreateRoomProps,
     callback: ({ room }: { room: RoomProps }) => void,
+  ) => void;
+
+  [types.LEAVE_ROOM]: (
+    chatRoomAuthId: string,
+    callback: ({ status }: { status: string }) => void,
   ) => void;
 }
 

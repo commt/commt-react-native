@@ -29,3 +29,8 @@ export const addMoreMessages =
   (data: AddMoreMessagesProps) => (dispatch: Dispatch<CommtContextActions>) => {
     dispatch({ type: "ADD_MORE_MESSAGES", payload: data });
   };
+
+export const deleteMessages =
+  (roomId: string) => (dispatch: Dispatch<CommtContextActions>) => {
+    dispatch({ type: "DELETE_MESSAGES", payload: roomId });
+  };
