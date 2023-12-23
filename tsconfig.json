@@ -1,8 +1,14 @@
 {
     "extends": "@tsconfig/react-native/tsconfig.json",
-    "include": ["./"],
+    "include": ["src/**/*", "./LICENSE", "./Readme.md"],
+    "exclude": ["node_modules", "dist"],
     "compilerOptions": {
       "baseUrl": "./",
-    }
+      "rootDir": "./src",
+      "outDir": "dist",
+      "resolveJsonModule": true,
+      "declaration": true,
+      "noEmit": false,
+    },
   }
   

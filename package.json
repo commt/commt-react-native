@@ -2,20 +2,21 @@
   "name": "@commt/rn-sdk",
   "version": "0.1.0",
   "description": "Ultimate chat plugin for react native applications",
-  "main": "src/index.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist/* && npx tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commt/rn-sdk.git"
+    "url": "git+https://github.com/commt/commt-react-native.git"
   },
+  "files": ["dist"],
   "dependencies": {
     "dayjs": "^1.11.9",
     "axios": "^1.4.0",
     "node-forge": "^1.3.1",
-    "react": "18.2.0",
-    "react-native": "0.71.8",
     "styled-components": "^6.0.0-rc.3",
     "rn-emoji-keyboard": "^1.5.0",
     "socket.io-client": "^4.6.2",
@@ -27,6 +28,10 @@
     "@types/node-forge": "^1.3.9",
     "@types/react": "^18.0.24",
     "@tsconfig/react-native": "^2.0.2"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.8"
   },
   "keywords": [
     "commt",
@@ -50,7 +55,7 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/commt/rn-sdk.git/issues"
+    "url": "https://github.com/commt/commt-react-native.git/issues"
   },
   "homepage": "https://commt.co/doc",
   "license": "MIT",
