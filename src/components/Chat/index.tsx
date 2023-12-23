@@ -242,9 +242,11 @@ const Chat = ({
         renderCustomView={(props: BubbleProps<ICustomMessage>) => (
           <CustomUsernameView {...props} activeRoom={activeRoom} />
         )}
-        renderAvatar={(props) => (
-          <CustomAvatar {...props} activeRoom={activeRoom} />
-        )}
+        renderAvatar={(props) =>
+          activeRoom?.groupAvatar && (
+            <CustomAvatar {...props} activeRoom={activeRoom} />
+          )
+        }
         renderAvatarOnTop={true}
         renderChatFooter={renderChatFooter}
         renderSystemMessage={CustomSystemMessage}
