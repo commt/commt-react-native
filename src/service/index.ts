@@ -2,7 +2,7 @@ import { UserProps } from "../context/reducers/usersReducer";
 import axios from "./Axios";
 import { ConfigsProps } from "../context/reducers/appReducer";
 import { RoomProps } from "../context/reducers/roomsReducer";
-import PackageJson from "../../package.json";
+import PackageJson from "../package.json";
 import * as events from "../utils/events";
 
 export interface InitiateProps {
