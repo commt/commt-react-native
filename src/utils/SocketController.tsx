@@ -22,15 +22,7 @@ const SocketController = () => {
       rooms,
       users: { selfUser, users },
       app: {
-        configs: {
-          indicators,
-          tenantId,
-          apiKey,
-          subscriptionKey,
-          secretKey,
-          projectName,
-          e2e,
-        },
+        configs: { indicators, tenantId, apiKey, projectId, secretKey, e2e },
       },
     },
     dispatch,
@@ -42,13 +34,13 @@ const SocketController = () => {
       connect({
         chatAuthId: selfUser?.chatAuthId,
         tenantId,
-        auth: { apiKey, subscriptionKey },
+        projectId,
+        auth: { apiKey },
       });
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -67,8 +59,7 @@ const SocketController = () => {
     socket.on(types.CONNECT_ERROR, (error) => {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -88,8 +79,7 @@ const SocketController = () => {
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,
@@ -114,8 +104,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             error: {
               error,
@@ -135,8 +124,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             error: {
               error,
@@ -156,8 +144,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             chatRoomAuthId: data.chatRoomAuthId,
             error: {
@@ -178,8 +165,7 @@ const SocketController = () => {
         } catch (error) {
           handleLogger({
             apiKey,
-            subscriptionKey,
-            projectName,
+            projectId,
             chatAuthId: selfUser?.chatAuthId,
             chatRoomAuthId: data.chatRoomAuthId,
             error: {
@@ -199,8 +185,7 @@ const SocketController = () => {
       } catch (error) {
         handleLogger({
           apiKey,
-          subscriptionKey,
-          projectName,
+          projectId,
           chatAuthId: selfUser?.chatAuthId,
           chatRoomAuthId: data.room.chatRoomAuthId,
           error: {
@@ -231,8 +216,7 @@ const SocketController = () => {
       } catch (error) {
         handleLogger({
           apiKey,
-          subscriptionKey,
-          projectName,
+          projectId,
           chatAuthId: selfUser?.chatAuthId,
           chatRoomAuthId: chatRoomAuthId,
           error: {
@@ -304,8 +288,7 @@ const SocketController = () => {
     } catch (error) {
       handleLogger({
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser?.chatAuthId,
         error: {
           error,

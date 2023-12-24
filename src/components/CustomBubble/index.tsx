@@ -46,6 +46,8 @@ const ReadInfo = ({ currentMessage, activeRoom }: ReadInfoProps) => {
       );
     }
   }
+
+  return <></>;
 };
 
 const CustomBubble = (props: CustomBubbleProps) => {

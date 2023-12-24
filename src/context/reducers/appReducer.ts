@@ -14,9 +14,8 @@ export type ConfigsProps = {
   indicators: IndicatorProps[];
   tenantId: string;
   apiKey: string;
-  subscriptionKey: string;
   secretKey: string;
-  projectName: string;
+  projectId: string;
 };
 
 export type AppState = {
@@ -34,9 +33,8 @@ export const AppValues: AppState = {
     indicators: [],
     tenantId: "",
     apiKey: "",
-    subscriptionKey: "",
     secretKey: "",
-    projectName: "",
+    projectId: "",
   },
 };
 

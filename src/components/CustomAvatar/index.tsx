@@ -11,9 +11,7 @@ interface CustomAvatarProps extends AvatarProps<IMessage> {
 const CustomAvatar = (props: CustomAvatarProps) => {
   const theme = useTheme();
   // render user avatar just for community chat
-  if (props.activeRoom?.groupAvatar) {
-    return <Avatar {...props} imageStyle={styles(theme).avatarImageStle} />;
-  }
+  return <Avatar {...props} imageStyle={styles(theme).avatarImageStle} />;
 };
 
 export default CustomAvatar;

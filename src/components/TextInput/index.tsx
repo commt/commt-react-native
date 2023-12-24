@@ -3,7 +3,7 @@ import { StyleProp, TextInputProps, TextStyle } from "react-native";
 import { useTheme } from "styled-components/native";
 import { StyledTextInput } from "./styles";
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
 }
 

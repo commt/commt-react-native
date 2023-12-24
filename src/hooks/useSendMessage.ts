@@ -18,7 +18,7 @@ const useSendMessage = () => {
       users: { selfUser, users },
       rooms,
       app: {
-        configs: { secretKey, apiKey, subscriptionKey, projectName, e2e },
+        configs: { secretKey, apiKey, projectId, e2e },
       },
     },
     dispatch,
@@ -89,8 +89,7 @@ const useSendMessage = () => {
       //handle Log params
       {
         apiKey,
-        subscriptionKey,
-        projectName,
+        projectId,
         chatAuthId: selfUser!.chatAuthId,
         chatRoomAuthId,
       },

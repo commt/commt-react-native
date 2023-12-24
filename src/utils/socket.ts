@@ -73,16 +73,15 @@ interface ClientToServerEvents {
 interface ConnectProps {
   chatAuthId: string | undefined;
   tenantId: string;
+  projectId: string;
   auth: {
     apiKey: string;
-    subscriptionKey: string;
   };
 }
 
 type HandleLogProps = {
   apiKey: string;
-  subscriptionKey: string;
-  projectName: string;
+  projectId: string;
   chatAuthId: string;
   chatRoomAuthId?: string;
 };
@@ -90,9 +89,9 @@ type HandleLogProps = {
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export const connect = (props: ConnectProps) => {
-  const { chatAuthId, tenantId, auth } = props;
+  const { chatAuthId, tenantId, auth, projectId } = props;
   socket = io("https://service.commt.co", {
-    query: { chatAuthId, tenantId },
+    query: { chatAuthId, tenantId, projectId },
     auth,
   });
 };
