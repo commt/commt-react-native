@@ -1,19 +1,20 @@
 {
   "name": "@commt/rn-sdk",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist/* && npx tsc && cp package*.json Readme.md dist",
-    "pub": "npm publish ./dist"
+    "pre-pub": "cd dist && mkdir dist && mv assets context service theme utils dist/",
+    "pub": "npm publish --access public ./dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/commt/commt-react-native.git"
   },
-  "files": ["dist"],
+  "files": ["./"],
   "dependencies": {
     "dayjs": "^1.11.9",
     "axios": "^1.4.0",
