@@ -6,7 +6,7 @@
 
 
 <p align="center">
-<img src="https://commt.co/images/logo/commt-logo.png" width="300" />
+<img src="./src/assets/images/react-native-logo.png" width="300" />
 </p>
 <br />
 
@@ -52,7 +52,7 @@ import { useInitiate } from "@commt/rn-sdk/hooks";
 const ClientConfig = {
   apiKey: "123456789?",
   projectId: "0987654321?",
-  secret: "123456789018A_7JzPo?23F+4y#erPL"
+  secret: "123456789018A_7JzPo?23F+4y#erPL" // Must to be 16, 24 or 32 bytes
 };
 
 function App(): JSX.Element {
