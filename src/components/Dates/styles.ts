@@ -7,11 +7,11 @@ export const Container = styled.View`
   padding-vertical: ${({ theme }) => theme.spacing.s}px;
 `;
 
-export const Line = styled.View<{ direction: string }>`
+export const Line = styled.View<{ pos: string }>`
   flex: 1;
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.colors.ui.ui5};
-  margin-${({ direction }) => direction}: ${({ theme }) => theme.spacing.m}px;
+  margin-${({ pos }) => pos}: ${({ theme }) => theme.spacing.m}px;
 `;
 
 export const DateText = styled.Text`

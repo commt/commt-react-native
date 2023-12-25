@@ -24,9 +24,9 @@ const Dates = (props: DayProps<ICustomMessage>) => {
   if (!isSameDay) {
     return (
       <Container>
-        <Line direction="left" />
+        <Line pos="left" />
         <DateText>{formattedDate(props.currentMessage?.createdAt)}</DateText>
-        <Line direction="right" />
+        <Line pos="right" />
       </Container>
     );
   }
