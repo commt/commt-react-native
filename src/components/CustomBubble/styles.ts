@@ -71,15 +71,14 @@ export const BubbleContainer = styled.View`
 `;
 
 export const BubbleBottomContainer = styled.View<{
-  direction: string;
+  pos: string;
   isGroupChat: boolean;
 }>`
   flex-direction: row;
   align-items: center;
-  justify-content: ${({ direction }) =>
-    direction == "right" ? "flex-end" : "flex-start"};
+  justify-content: ${({ pos }) =>
+    pos === "right" ? "flex-end" : "flex-start"};
   padding-left: ${({ isGroupChat, theme }) =>
     isGroupChat ? -theme.spacing.xs : 0}px;
-  right: ${({ direction, theme }) =>
-    direction == "right" ? theme.spacing.xs : "0"}px;
+  right: ${({ pos, theme }) => (pos === "right" ? theme.spacing.xs : "0")}px;
 `;
