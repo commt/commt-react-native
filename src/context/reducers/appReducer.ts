@@ -41,7 +41,7 @@ export const AppValues: AppState = {
 export function appReducer(state: AppState, action: CommtContextActions) {
   switch (action.type) {
     case "TOGGLE_THEME": {
-      return { ...state, theme: action.payload };
+      return { ...state, theme: { ...state.theme, colors: action.payload } };
     }
 
     case "SET_SEARCH_VALUE": {
