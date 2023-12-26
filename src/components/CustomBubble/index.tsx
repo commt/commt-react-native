@@ -69,7 +69,7 @@ const CustomBubble = (props: CustomBubbleProps) => {
         renderTime={() => null}
       />
       <BubbleBottomContainer
-        direction={props.position}
+        pos={props.position}
         isGroupChat={props.activeRoom?.groupAvatar ? true : false}>
         <Time {...props} timeTextStyle={styles(theme).timeTextStyle} />
         {indicators.includes(IndicatorProps.MESSAGE_READ) && (

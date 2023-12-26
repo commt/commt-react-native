@@ -1,6 +1,6 @@
 {
   "name": "@commt/rn-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.js",
   "types": "index.d.ts",
@@ -33,7 +33,7 @@
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.71.8"
+    "react-native": "0.72.7"
   },
   "keywords": [
     "commt",
