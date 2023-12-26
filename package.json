@@ -1,6 +1,6 @@
 {
   "name": "@commt/rn-sdk",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.js",
   "types": "index.d.ts",
