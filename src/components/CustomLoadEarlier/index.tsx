@@ -76,17 +76,21 @@ const CustomLoadEarlier = ({
     setIsLoading(false);
   };
 
-  return (
-    <LoadEarlier
-      onLoadEarlier={onLoadEarlier}
-      wrapperStyle={styles(theme).wrapperStyle}
-      textStyle={styles(theme).textStyle}
-      activityIndicatorSize={"small"}
-      activityIndicatorColor={theme?.colors.ui.ui3}
-      isLoadingEarlier={isLoading}
-      label="Load More"
-    />
-  );
+  if (hasMore) {
+    return (
+      <LoadEarlier
+        onLoadEarlier={onLoadEarlier}
+        wrapperStyle={styles(theme).wrapperStyle}
+        textStyle={styles(theme).textStyle}
+        activityIndicatorSize={"small"}
+        activityIndicatorColor={theme?.colors.ui.ui3}
+        isLoadingEarlier={isLoading}
+        label="Load More"
+      />
+    );
+  }
+
+  return null;
 };
 
 export default CustomLoadEarlier;

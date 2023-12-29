@@ -74,7 +74,7 @@ const SocketController = () => {
     // join all rooms
     try {
       socket?.emit(types.JOIN_ROOMS, chatRoomAuthIds, (joinedRooms) => {
-        console.log("JOINED", joinedRooms);
+        // console.log("JOINED", joinedRooms);
       });
     } catch (error) {
       handleLogger({

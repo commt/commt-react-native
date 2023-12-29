@@ -1,7 +1,7 @@
-import React, { ComponentType } from "react";
+import React from "react";
 import { CommtContextProvider } from "./context/Context";
 
-const CommtProvider = (OriginalComponent: ComponentType) => {
+const CommtProvider = (OriginalComponent: () => React.JSX.Element) => {
   return (props: any) => (
     <CommtContextProvider>
       <OriginalComponent {...props} />

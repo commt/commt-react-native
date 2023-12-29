@@ -1,39 +1,37 @@
 {
   "name": "@commt/rn-sdk",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "Ultimate chat plugin for react native applications",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist/* && npx tsc && cp package*.json Readme.md dist",
-    "pre-pub": "cd dist && mkdir dist && mv assets context service theme utils dist/",
-    "pub": "npm publish --access public ./dist"
+    "pub": "npm publish --access public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/commt/commt-react-native.git"
+    "url": "https://github.com/commt/commt-react-native.git"
   },
-  "files": ["./"],
+  "devDependencies": {
+    "@tsconfig/react-native": "^2.0.2",
+    "@types/node-forge": "^1.3.9",
+    "@types/react": "^18.0.24",
+    "typescript": "4.8.4"
+  },
   "dependencies": {
     "dayjs": "^1.11.9",
     "axios": "^1.4.0",
     "node-forge": "^1.3.1",
-    "styled-components": "^6.0.0-rc.3",
+    "react-native-gifted-chat": "^2.4.0",
+    "react-native-svg": "13.10.0",
     "rn-emoji-keyboard": "^1.5.0",
     "socket.io-client": "^4.6.2",
-    "react-native-svg": "^13.10.0",
-    "react-native-gifted-chat": "^2.4.0"
-  },
-  "devDependencies": {
-    "typescript": "4.8.4",
-    "@types/node-forge": "^1.3.9",
-    "@types/react": "^18.0.24",
-    "@tsconfig/react-native": "^2.0.2"
+    "styled-components": "^6.0.0-rc.3"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.72.7"
+    "react-native": ">=0.72.0"
   },
   "keywords": [
     "commt",
@@ -43,8 +41,10 @@
     "react",
     "message",
     "messenger",
+    "mobile-chat",
     "commt-react-native",
     "custom-chat-plugin",
+    "react-native-chat",
     "react-native-chat-sdk",
     "react-native-chat-plugin"
   ],
