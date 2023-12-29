@@ -150,7 +150,7 @@ const Chat = ({
   };
 
   const renderChatFooter = () => {
-    if (indicators.includes(IndicatorProps.TYPING)) {
+    if (indicators.includes(IndicatorProps.TYPING) && activeRoom) {
       return <ChatFooter chatRoomAuthId={activeRoom!.chatRoomAuthId} />;
     }
   };
