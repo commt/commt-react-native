@@ -5,7 +5,6 @@ import { CommtContext } from "../../context/Context";
 import useTypingUsers from "../../hooks/useTypingUsers";
 import PopUpButtons, { PopUpButtonsProps } from "../PopUpButtons";
 import { IndicatorProps } from "../../context/reducers/appReducer";
-import { TouchableOpacity } from "react-native";
 
 interface ChatHeaderProps extends PopUpButtonsProps {
   roomId?: string;
@@ -86,11 +85,9 @@ const ChatHeader = ({
         />
       )}
       <HeaderInfo>
-        <TouchableOpacity onPress={onUserProfileClick}>
-          <UserOrGroupName>
-            {room?.groupName ?? oppositeUser?.username}
-          </UserOrGroupName>
-        </TouchableOpacity>
+        <UserOrGroupName onPress={onUserProfileClick}>
+          {room?.groupName ?? oppositeUser?.username}
+        </UserOrGroupName>
         {renderMembersOrOnline()}
       </HeaderInfo>
       {popUpButtons && <PopUpButtons popUpButtons={popUpButtons} />}
