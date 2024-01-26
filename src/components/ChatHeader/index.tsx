@@ -11,6 +11,7 @@ interface ChatHeaderProps extends PopUpButtonsProps {
   roomId?: string;
   participants?: Array<string>;
   onUserProfileClick?: () => void;
+  leftComponent?: React.JSX.Element;
 }
 
 const ChatHeader = ({
@@ -18,6 +19,7 @@ const ChatHeader = ({
   participants,
   popUpButtons,
   onUserProfileClick,
+  leftComponent,
 }: ChatHeaderProps) => {
   const {
     state: {
@@ -75,6 +77,7 @@ const ChatHeader = ({
 
   return (
     <Container>
+      {leftComponent}
       {(room?.groupAvatar || oppositeUser?.avatar) && (
         <Avatar
           uri={room?.groupAvatar ?? oppositeUser?.avatar}
