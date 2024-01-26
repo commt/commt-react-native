@@ -9,12 +9,16 @@ import { IndicatorProps } from "../../context/reducers/appReducer";
 interface ChatHeaderProps extends PopUpButtonsProps {
   roomId?: string;
   participants?: Array<string>;
+  onUserProfileClick?: () => void;
+  leftComponent?: React.JSX.Element;
 }
 
 const ChatHeader = ({
   roomId,
   participants,
   popUpButtons,
+  onUserProfileClick,
+  leftComponent,
 }: ChatHeaderProps) => {
   const {
     state: {
@@ -72,14 +76,16 @@ const ChatHeader = ({
 
   return (
     <Container>
+      {leftComponent}
       {(room?.groupAvatar || oppositeUser?.avatar) && (
         <Avatar
           uri={room?.groupAvatar ?? oppositeUser?.avatar}
           online={oppositeUser?.online ?? false}
+          onPress={onUserProfileClick}
         />
       )}
       <HeaderInfo>
-        <UserOrGroupName>
+        <UserOrGroupName onPress={onUserProfileClick}>
           {room?.groupName ?? oppositeUser?.username}
         </UserOrGroupName>
         {renderMembersOrOnline()}
