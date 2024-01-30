@@ -17,7 +17,9 @@ import Dates from "../Dates";
 import CustomAvatar from "../CustomAvatar";
 import ChatFooter from "../ChatFooter";
 import CustomSystemMessage from "../CustomSystemMessage";
-import CustomLoadEarlier, { LoadMoreMessagesType } from "../CustomLoadEarlier";
+import useLoadEarlier, {
+  LoadMoreMessagesType,
+} from "../../hooks/useLoadEarlier";
 import {
   createNewRoom,
   sendReadToken,
@@ -55,12 +57,16 @@ const Chat = ({
 
   const [customText, setCustomText] = useState<string>("");
   const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
-  const isAlreadyTypingRef = useRef<boolean>(false);
-  const theme = useTheme();
-  const onSendMessage = useSendMessage();
   const [activeRoom, setActiveRoom] = useState(
     rooms.find((room) => room.roomId === roomId),
   );
+  const isAlreadyTypingRef = useRef<boolean>(false);
+  const theme = useTheme();
+  const onSendMessage = useSendMessage();
+  const onLoadEarlier = useLoadEarlier({
+    activeRoom,
+    loadMoreMessages,
+  });
 
   useEffect(() => {
     // if opposite user create new room, update active room
@@ -261,13 +267,8 @@ const Chat = ({
         infiniteScroll={true}
         alignTop={true}
         loadEarlier={true}
-        renderLoadEarlier={(props) => (
-          <CustomLoadEarlier
-            {...props}
-            activeRoom={activeRoom}
-            loadMoreMessages={loadMoreMessages}
-          />
-        )}
+        onLoadEarlier={onLoadEarlier}
+        renderLoadEarlier={() => null}
       />
       {isEmojiOpen && (
         <EmojiKeyboard
