@@ -32,6 +32,7 @@ const useLoadEarlier = ({ activeRoom, loadMoreMessages }: LoadEarlierProps) => {
   } = useContext(CommtContext);
 
   const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const limit = 10;
 
   const getEarlierMessages = async () => {
@@ -56,6 +57,7 @@ const useLoadEarlier = ({ activeRoom, loadMoreMessages }: LoadEarlierProps) => {
   };
 
   const onLoadEarlier = async () => {
+    setIsLoading(true);
     // if there are more messages start request
     if (hasMore) {
       const messageArr = await getEarlierMessages();
@@ -64,9 +66,10 @@ const useLoadEarlier = ({ activeRoom, loadMoreMessages }: LoadEarlierProps) => {
         dispatch,
       );
     }
+    setIsLoading(false);
   };
 
-  return hasMore ? onLoadEarlier : undefined;
+  return { onLoadEarlier, isLoading };
 };
 
 export default useLoadEarlier;

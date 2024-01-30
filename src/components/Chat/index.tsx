@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import { ActivityIndicator } from "react-native";
 import { styles, Container } from "./styles";
 import { CommtContext } from "../../context/Context";
 import { ICustomMessage } from "../../context/reducers/messagesReducer";
@@ -63,7 +64,7 @@ const Chat = ({
   const isAlreadyTypingRef = useRef<boolean>(false);
   const theme = useTheme();
   const onSendMessage = useSendMessage();
-  const onLoadEarlier = useLoadEarlier({
+  const { onLoadEarlier, isLoading } = useLoadEarlier({
     activeRoom,
     loadMoreMessages,
   });
@@ -268,7 +269,12 @@ const Chat = ({
         alignTop={true}
         loadEarlier={true}
         onLoadEarlier={onLoadEarlier}
-        renderLoadEarlier={() => null}
+        isLoadingEarlier={isLoading}
+        renderLoadEarlier={() =>
+          isLoading && (
+            <ActivityIndicator size="large" color={theme?.colors.ui.ui3} />
+          )
+        }
       />
       {isEmojiOpen && (
         <EmojiKeyboard
