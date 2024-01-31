@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import { ActivityIndicator } from "react-native";
 import { styles, Container } from "./styles";
 import { CommtContext } from "../../context/Context";
 import { ICustomMessage } from "../../context/reducers/messagesReducer";
@@ -17,7 +18,9 @@ import Dates from "../Dates";
 import CustomAvatar from "../CustomAvatar";
 import ChatFooter from "../ChatFooter";
 import CustomSystemMessage from "../CustomSystemMessage";
-import CustomLoadEarlier, { LoadMoreMessagesType } from "../CustomLoadEarlier";
+import useLoadEarlier, {
+  LoadMoreMessagesType,
+} from "../../hooks/useLoadEarlier";
 import {
   createNewRoom,
   sendReadToken,
@@ -55,12 +58,16 @@ const Chat = ({
 
   const [customText, setCustomText] = useState<string>("");
   const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
-  const isAlreadyTypingRef = useRef<boolean>(false);
-  const theme = useTheme();
-  const onSendMessage = useSendMessage();
   const [activeRoom, setActiveRoom] = useState(
     rooms.find((room) => room.roomId === roomId),
   );
+  const isAlreadyTypingRef = useRef<boolean>(false);
+  const theme = useTheme();
+  const onSendMessage = useSendMessage();
+  const { onLoadEarlier, isLoading } = useLoadEarlier({
+    activeRoom,
+    loadMoreMessages,
+  });
 
   useEffect(() => {
     // if opposite user create new room, update active room
@@ -261,13 +268,13 @@ const Chat = ({
         infiniteScroll={true}
         alignTop={true}
         loadEarlier={true}
-        renderLoadEarlier={(props) => (
-          <CustomLoadEarlier
-            {...props}
-            activeRoom={activeRoom}
-            loadMoreMessages={loadMoreMessages}
-          />
-        )}
+        onLoadEarlier={onLoadEarlier}
+        isLoadingEarlier={isLoading}
+        renderLoadEarlier={() =>
+          isLoading && (
+            <ActivityIndicator size="large" color={theme?.colors.ui.ui3} />
+          )
+        }
       />
       {isEmojiOpen && (
         <EmojiKeyboard

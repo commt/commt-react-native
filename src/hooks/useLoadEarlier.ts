@@ -1,12 +1,9 @@
-import React, { useContext, useState } from "react";
-import { styles } from "./styles";
-import { LoadEarlierProps, LoadEarlier } from "react-native-gifted-chat";
-import { useTheme } from "styled-components/native";
-import { MessageActionProps } from "../../hooks/useSetMessages";
-import { RoomProps } from "../../context/reducers/roomsReducer";
-import { CommtContext } from "../../context/Context";
-import gfMessageFormat from "../../utils/gfMessageFormat";
-import { addMoreMessages } from "../../context/actions/messagesAction";
+import { useContext, useState } from "react";
+import { MessageActionProps } from "./useSetMessages";
+import { RoomProps } from "../context/reducers/roomsReducer";
+import { CommtContext } from "../context/Context";
+import gfMessageFormat from "../utils/gfMessageFormat";
+import { addMoreMessages } from "../context/actions/messagesAction";
 
 export type LoadMoreMessagesType = (props: {
   roomId: string;
@@ -20,15 +17,12 @@ export type LoadMoreMessagesType = (props: {
   | undefined
 >;
 
-interface CustomLoadEarlierProps extends LoadEarlierProps {
+interface LoadEarlierProps {
   activeRoom: RoomProps | undefined;
   loadMoreMessages: LoadMoreMessagesType;
 }
 
-const CustomLoadEarlier = ({
-  activeRoom,
-  loadMoreMessages,
-}: CustomLoadEarlierProps) => {
+const useLoadEarlier = ({ activeRoom, loadMoreMessages }: LoadEarlierProps) => {
   const {
     state: {
       messages,
@@ -37,7 +31,6 @@ const CustomLoadEarlier = ({
     dispatch,
   } = useContext(CommtContext);
 
-  const theme = useTheme();
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const limit = 10;
@@ -76,21 +69,7 @@ const CustomLoadEarlier = ({
     setIsLoading(false);
   };
 
-  if (hasMore) {
-    return (
-      <LoadEarlier
-        onLoadEarlier={onLoadEarlier}
-        wrapperStyle={styles(theme).wrapperStyle}
-        textStyle={styles(theme).textStyle}
-        activityIndicatorSize={"small"}
-        activityIndicatorColor={theme?.colors.ui.ui3}
-        isLoadingEarlier={isLoading}
-        label="Load More"
-      />
-    );
-  }
-
-  return null;
+  return { onLoadEarlier, isLoading };
 };
 
-export default CustomLoadEarlier;
+export default useLoadEarlier;
