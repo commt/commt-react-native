@@ -263,7 +263,7 @@ const Chat = ({
           )
         }
         renderAvatarOnTop={true}
-        renderChatFooter={renderChatFooter}
+        renderFooter={renderChatFooter}
         renderSystemMessage={CustomSystemMessage}
         showAvatarForEveryMessage={true}
         messagesContainerStyle={styles(theme).messageContainerStyle}
