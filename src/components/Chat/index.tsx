@@ -58,7 +58,7 @@ const Chat = ({
 
   const [customText, setCustomText] = useState<string>("");
   const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
-  const [activeRoom, setActiveRoom] = useState(
+  const [activeRoom, setActiveRoom] = useState<RoomProps | undefined>(
     rooms.find((room) => room.roomId === roomId),
   );
   const isAlreadyTypingRef = useRef<boolean>(false);
@@ -70,18 +70,26 @@ const Chat = ({
   });
 
   useEffect(() => {
-    // if opposite user create new room, update active room
-    if (!activeRoom && !roomId && participants) {
-      const newRoom = rooms.find((room) => {
-        return participants.every((id) => room.participants.includes(id));
-      });
-      newRoom && setActiveRoom(newRoom);
-    }
-  }, [rooms]);
-
-  useEffect(() => {
+    // Check if a specific room is provided
     if (roomId) {
+      // Update the active room based on roomId
       setActiveRoom(rooms.find((room) => room.roomId === roomId));
+    } else if (!activeRoom && !roomId && participants) {
+      // If no specific room is provided, no active room exists, and participants are available,
+      // it indicates that a new room has not been created yet.
+
+      // Find a new room if the opposite user creates a new room and the room participants match the participants
+      const newRoom = rooms.find((room) =>
+        participants.every((id) => room.participants.includes(id)),
+      );
+      newRoom && setActiveRoom(newRoom);
+    } else if (activeRoom && !roomId && participants) {
+      // If an active room, no specific roomId, and participants are available,
+      // it indicates that the active room has been newly created
+
+      // Update the active room based on activeRooms's roomId
+      const room = rooms.find((room) => room.roomId === activeRoom?.roomId);
+      room && setActiveRoom(room);
     }
   }, [rooms, roomId]);
 
