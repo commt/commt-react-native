@@ -54,7 +54,7 @@ For detailed installation instructions and configuration options, please refer t
 Get started with Commt in just a few steps:
 
 - Initialize Commt: Import the Provider module and set up the chat plugin in your application by wrap your app with it.
-- Customize UI: Tailor the UI elements to match your app's aesthetics. Trigger the `useTheme` hook by passing theme values and make the components custom.
+- Customize UI: Tailor the UI elements to match your app's aesthetics. Trigger the `useToggleTheme` hook by passing theme values and make the components custom.
 - Implement Secure Chat: Utilize the secure and encrypted chat functionalities.
 
 Check out our [documentation](https://commt.co/doc/react-native#introduction) for comprehensive usage examples and API reference.
@@ -184,6 +184,67 @@ const Chats = () => {
 <p align="center">
 <img src="https://commt.co/images/media/Chat-Screen.png" width="200" />
 </p>
+
+**Customize UI Component**
+
+Utilize the `useToggleTheme` hook to effortlessly customize UI component colors.
+
+**Home.tsx**
+
+```
+import { useToggleTheme} from "@commt/rn-sdk/hooks";
+
+const toggleThemeProps = {
+  passive: "#8D9293",
+  bubble: "#A91A24",
+  bcg: "#272C2D",
+  searchText: "#FFF",
+  read1: "#1B9C32",
+  read2: "#E57A81",
+  app1: "#F8FAFA",
+  app2: "#D9DBDB",
+  app3: "#41494B",
+  app4: "#3FC610",
+  app5: "#1A1D1E",
+  app6: "#FBE9EA",
+  app7: "#DC4D57",
+  app8: "#E57A81",
+};
+
+const Home = () => {
+  // ...
+  const toggleThemeAction = useToggleTheme();
+
+  const handleToggleTheme = () => {
+    // update @commt/rn-sdk package theme colors
+    toggleThemeAction(toggleThemeProps);
+  };
+
+  return (
+    // ...
+    <Button onPress={handleToggleTheme} title="Update Colors"/>
+  );
+};
+```
+
+**Toggle Theme Props Definition**
+
+| Prop name  | Required | Type   | Affected UI Components Parts                                                                                                                                                                                                                                                                                     |
+| ---------- | -------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| passive    | Yes      | String | "QuickChat" title, passive username, online text under username, username in bubbles(group chat), search bar icon and placeholder, chat input placeholder and emoji icon, three dots icon, message time(RoomCard, Chat components), message text(RoomCard component) and day text between message bubbles colors |
+| bubble     | Yes      | String | Self user bubble bcg color                                                                                                                                                                                                                                                                                       |
+| bcg        | Yes      | String | App bcg, send button icon, self user bubble text and chat header bcg colors                                                                                                                                                                                                                                      |
+| searchText | Yes      | String | Search bar search text color                                                                                                                                                                                                                                                                                     |
+| read1      | Yes      | String | Message read icon(RoomCard component) and typing text colors                                                                                                                                                                                                                                                     |
+| read2      | Yes      | String | Message had read badge icon color under bubble                                                                                                                                                                                                                                                                   |
+| app1       | Yes      | String | "Messages" title, popUpButtons title, username and system message text colors                                                                                                                                                                                                                                    |
+| app2       | Yes      | String | Chat input active text, send button passive bcg and opposite user bubble text colors                                                                                                                                                                                                                             |
+| app3       | Yes      | String | Oppsite user bubble bcg, stroke, search bar bcg, chat input bcg and chat input border colors                                                                                                                                                                                                                     |
+| app4       | Yes      | String | Online user indicator color                                                                                                                                                                                                                                                                                      |
+| app5       | Yes      | String | Chat area bcg color                                                                                                                                                                                                                                                                                              |
+| app6       | Yes      | String | Unread badge text color                                                                                                                                                                                                                                                                                          |
+| app7       | Yes      | String | Send button active bcg color                                                                                                                                                                                                                                                                                     |
+| app8       | Yes      | String | Unread badge bcg color                                                                                                                                                                                                                                                                                           |
 
 ## Compatibility
 
