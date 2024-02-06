@@ -76,16 +76,16 @@ const Chat = ({
       setActiveRoom(rooms.find((room) => room.roomId === roomId));
     } else if (!activeRoom && !roomId && participants) {
       // If no specific room is provided, no active room exists, and participants are available,
-      // it indicates that a new room has not been created yet.
+      // that indicates that a new room has not been created yet.
 
-      // Find a new room if the opposite user creates a new room and the room participants match the participants
+      // Find the new room and the room participants match the participants
       const newRoom = rooms.find((room) =>
         participants.every((id) => room.participants.includes(id)),
       );
       newRoom && setActiveRoom(newRoom);
     } else if (activeRoom && !roomId && participants) {
       // If an active room, no specific roomId, and participants are available,
-      // it indicates that the active room has been newly created
+      // that indicates that the active room has been newly created
 
       // Update the active room based on activeRooms's roomId
       const room = rooms.find((room) => room.roomId === activeRoom?.roomId);
