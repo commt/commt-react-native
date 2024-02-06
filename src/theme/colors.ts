@@ -31,35 +31,6 @@ const COLOR_PALETTE = {
   white: "#FFF",
 };
 
-const DARK_THEME_COLORS = {
-  app: {
-    app1: COLOR_PALETTE.gray[50], // text & username color
-    app2: COLOR_PALETTE.gray[400], // messages screen message color & 'online' text color under username
-    app3: COLOR_PALETTE.gray[900], // app bcg color
-    app4: COLOR_PALETTE.white, // send button icon & first user bubble text color
-    app5: COLOR_PALETTE.white, // search bar search text color
-  },
-  ui: {
-    ui1: COLOR_PALETTE.gray[200], // chat input active text & send button passive bcg & second user bubble text color
-    ui2: COLOR_PALETTE.gray[300], // chat input emoji icon & three dots icon color
-    ui3: COLOR_PALETTE.gray[500], // subtitles & passive text & time & search bar icon and placeholder & chat input placeholder & passive username color
-    ui4: COLOR_PALETTE.gray[700], // second user bubble bcg color
-    ui5: COLOR_PALETTE.gray[800], // stroke & search bar bcg & chat input bcg color
-    ui6: COLOR_PALETTE.gray[800], // chat screen header bcg color
-    ui7: COLOR_PALETTE.green[100], // online user color
-    ui8: COLOR_PALETTE.green[200], // message red icon color
-    ui9: COLOR_PALETTE.gray[900], // chat area bcg color 
-    ui10: COLOR_PALETTE.gray[600], // chat input border color
-  },
-  brand: {
-    brand1: COLOR_PALETTE.red[100], // unread badge text color
-    brand2: COLOR_PALETTE.red[400], // message had read badge icon color under bubble
-    brand3: COLOR_PALETTE.red[500], // send button active bcg color
-    brand4: COLOR_PALETTE.red[700], // unread badge bcg color
-    brand5: COLOR_PALETTE.red[700], // first user bubble bcg color
-  },
-};
-
 const LIGHT_THEME_COLORS = {
   app: {
     app1: COLOR_PALETTE.gray[1000], // text & username color
@@ -89,4 +60,4 @@ const LIGHT_THEME_COLORS = {
   },
 };
 
-export default { DARK_THEME_COLORS, LIGHT_THEME_COLORS };
+export default { LIGHT_THEME_COLORS };
