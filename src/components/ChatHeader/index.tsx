@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Container, UserOrGroupName, HeaderInfo, UnderText } from "./styles";
 import Avatar from "../Avatar";
 import { CommtContext } from "../../context/Context";
 import useTypingUsers from "../../hooks/useTypingUsers";
 import PopUpButtons, { PopUpButtonsProps } from "../PopUpButtons";
 import { IndicatorProps } from "../../context/reducers/appReducer";
+import { RoomProps } from "src/context/reducers/roomsReducer";
 
 interface ChatHeaderProps extends PopUpButtonsProps {
   roomId?: string;
@@ -30,13 +31,29 @@ const ChatHeader = ({
     },
   } = useContext(CommtContext);
 
-  const room = rooms.find((room) => room.roomId === roomId);
-  const typingUserNames = useTypingUsers(room?.chatRoomAuthId ?? null);
-  // If 'room' exists, find the opposite user Id in 'room.participants'; otherwise, search in 'participants'.
-  const oppositeUserId = room
-    ? room.groupName
+  const [activeRoom, setActiveRoom] = useState<RoomProps | undefined>(
+    rooms.find((room) => room.roomId === roomId),
+  );
+  const typingUserNames = useTypingUsers(activeRoom?.chatRoomAuthId ?? null);
+
+  useEffect(() => {
+    if (!activeRoom && !roomId && participants) {
+      // If no specific room is provided, no active room exists, and participants are available,
+      // that indicates that a new room has not been created yet.
+
+      // Find the new room and the room participants match the participants
+      const newRoom = rooms.find((room) =>
+        participants.every((id) => room.participants.includes(id)),
+      );
+      newRoom && setActiveRoom(newRoom);
+    }
+  }, [rooms]);
+
+  // If 'room' exists, find the opposite user Id in ' activeRoom.participants'; otherwise, search in 'participants'.
+  const oppositeUserId = activeRoom
+    ? activeRoom.groupName
       ? null
-      : room.participants.find(
+      : activeRoom.participants.find(
           (id) => id !== selfUser?._id && !id.startsWith("system"),
         )
     : participants?.find(
@@ -45,16 +62,16 @@ const ChatHeader = ({
   const oppositeUser = users.find(({ _id }) => _id === oppositeUserId);
 
   const renderMembersOrOnline = () => {
-    if (room?.groupAvatar) {
+    if (activeRoom?.groupAvatar) {
       // This room is a group chat
       const memberNames =
         users
-          .filter(({ _id }) => room.participants.includes(_id))
+          .filter(({ _id }) => activeRoom.participants.includes(_id))
           .map(({ username }) => username)
           .slice(0, 3)
           .join(", ") +
-        (room.participants.length > 3
-          ? ` and ${room.participants.length - 3}`
+        (activeRoom.participants.length > 3
+          ? ` and ${activeRoom.participants.length - 3}`
           : "");
 
       return typingUserNames ? (
@@ -77,16 +94,16 @@ const ChatHeader = ({
   return (
     <Container>
       {leftComponent}
-      {(room?.groupAvatar || oppositeUser?.avatar) && (
+      {(activeRoom?.groupAvatar || oppositeUser?.avatar) && (
         <Avatar
-          uri={room?.groupAvatar ?? oppositeUser?.avatar}
+          uri={activeRoom?.groupAvatar ?? oppositeUser?.avatar}
           online={oppositeUser?.online ?? false}
           onPress={onUserProfileClick}
         />
       )}
       <HeaderInfo>
         <UserOrGroupName onPress={onUserProfileClick}>
-          {room?.groupName ?? oppositeUser?.username}
+          {activeRoom?.groupName ?? oppositeUser?.username}
         </UserOrGroupName>
         {renderMembersOrOnline()}
       </HeaderInfo>

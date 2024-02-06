@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist/* && npx tsc && cp package*.json Readme.md dist",
-    "pub": "npm publish --access public"
+    "pub": "npm publish --access public",
+    "build:w": "RMDIR dist /S /Q && MKDIR dist && npx tsc && copy package.json dist && copy Readme.md dist"
   },
   "repository": {
     "type": "git",
