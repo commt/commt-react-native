@@ -5,7 +5,7 @@ import { toggleTheme } from "../context/actions/appActions";
 type ToggleThemeProps = {
   passive: string; // app2 = ui3 = ui2
   bubble: string; // brand5
-  bcg: string; // app3 = app4 = ui6
+  bcg: string; // app3
   searchText: string; // app5
   read1: string; // ui8
   read2: string; // brand2
@@ -17,6 +17,8 @@ type ToggleThemeProps = {
   app6: string; // brand1
   app7: string; // brand3
   app8: string; // brand4
+  ui1: string; // app4
+  ui2: string; // ui6
 };
 
 const useToggleTheme = () => {
@@ -28,7 +30,7 @@ const useToggleTheme = () => {
         app1: themeValue.app1,
         app2: themeValue.passive,
         app3: themeValue.bcg,
-        app4: themeValue.bcg,
+        app4: themeValue.ui1,
         app5: themeValue.searchText,
       },
       ui: {
@@ -37,7 +39,7 @@ const useToggleTheme = () => {
         ui3: themeValue.passive,
         ui4: themeValue.app3,
         ui5: themeValue.app3,
-        ui6: themeValue.bcg,
+        ui6: themeValue.ui2,
         ui7: themeValue.app4,
         ui8: themeValue.read1,
         ui9: themeValue.app5,
