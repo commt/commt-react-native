@@ -45,7 +45,7 @@ const LIGHT_THEME_COLORS = {
     ui3: COLOR_PALETTE.gray[300], // subtitles & passive text & time & search bar icon and placeholder & chat input placeholder & passive username color
     ui4: COLOR_PALETTE.gray[100], // second user bubble bcg color
     ui5: COLOR_PALETTE.gray[100], // stroke & search bar bcg color & chat input bcg color
-    ui6: COLOR_PALETTE.white, // chat screen header bcg color
+    ui6: COLOR_PALETTE.white, // chat screen header and footer bcg color
     ui7: COLOR_PALETTE.green[100], // online user color
     ui8: COLOR_PALETTE.green[200], // message red icon color
     ui9: COLOR_PALETTE.gray[50], // chat area bcg color

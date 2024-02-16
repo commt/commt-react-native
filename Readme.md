@@ -170,12 +170,17 @@ const Chats = () => {
 
   return (
     <Container>
-      <ChatHeader roomId={roomId} participants={participants} />
+      <ChatHeader
+        roomId={roomId}
+        participants={participants}
+        leftComponent={YOUR_CUSTOM_COMPONENT} // Optional
+        onUserProfileClick={YOUR_CALLBACK_FUNCTION} // Optional: Triggered on username/avatar press.
+      />
       <Chat
         roomId={roomId}
         participants={participants}
         loadMoreMessages={YOUR_LOAD_MORE_MESSAGES_ACTION}
-        />
+      />
     </Container>
   );
 };
@@ -233,7 +238,7 @@ const Home = () => {
 | ---------- | -------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | passive    | Yes      | String | "QuickChat" title, passive username, online text under username, username in bubbles(group chat), search bar icon and placeholder, chat input placeholder and emoji icon, three dots icon, message time(RoomCard, Chat components), message text(RoomCard component) and day text between message bubbles colors |
 | bubble     | Yes      | String | Self user bubble bcg color                                                                                                                                                                                                                                                                                       |
-| bcg        | Yes      | String | App bcg, send button icon, self user bubble text and chat header bcg colors                                                                                                                                                                                                                                      |
+| bcg        | Yes      | String | App bcg color                                                                                                                                                                                                                                                                                                    |
 | searchText | Yes      | String | Search bar search text color                                                                                                                                                                                                                                                                                     |
 | read1      | Yes      | String | Message read icon(RoomCard component) and typing text colors                                                                                                                                                                                                                                                     |
 | read2      | Yes      | String | Message had read badge icon color under bubble                                                                                                                                                                                                                                                                   |
@@ -245,6 +250,8 @@ const Home = () => {
 | app6       | Yes      | String | Unread badge text color                                                                                                                                                                                                                                                                                          |
 | app7       | Yes      | String | Send button active bcg color                                                                                                                                                                                                                                                                                     |
 | app8       | Yes      | String | Unread badge bcg color                                                                                                                                                                                                                                                                                           |
+| ui1        | Yes      | String | Send button icon and self user bubble text color                                                                                                                                                                                                                                                                 |
+| ui2        | Yes      | String | Chat header and footer bcg color                                                                                                                                                                                                                                                                                 |
 
 ## Compatibility
 

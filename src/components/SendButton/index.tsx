@@ -10,7 +10,7 @@ const SendButton = (props: SendProps<ICustomMessage>) => {
   return (
     <Send {...props} containerStyle={styles(theme).sendContainerStyle}>
       <SendView>
-        <PaperPlane />
+        <PaperPlane color={theme?.colors.app.app4} />
       </SendView>
     </Send>
   );
