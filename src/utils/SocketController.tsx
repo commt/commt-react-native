@@ -140,6 +140,13 @@ const SocketController = () => {
     if (indicators.includes(IndicatorProps.TYPING)) {
       socket.on(types.RECEIVE_TYPING_STATUS, (data) => {
         try {
+          // Find the user according to chatAuthId
+          const user = users.find((user) => user.chatAuthId === data.userId);
+          // if the data holds chatAuthId as userId we will find user, otherwise keep data unchanged
+          if (user) {
+            // Replace userId with the _id field, if the user is found.
+            data.userId = user._id;
+          }
           updateTypingUsers(data)(dispatch);
         } catch (error) {
           handleLogger({
@@ -155,7 +162,7 @@ const SocketController = () => {
         }
       });
     }
-  }, [indicators]);
+  }, [indicators, users]);
 
   useEffect(() => {
     if (indicators.includes(IndicatorProps.MESSAGE_READ)) {
